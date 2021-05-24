@@ -26,7 +26,7 @@ class AddDayView(LoginRequiredMixin, generic.FormView):
     return super().form_valid(form)
 
 
-class IndexView(LoginRequiredMixin, generic.ListView):
+class DayIndexView(LoginRequiredMixin, generic.ListView):
   template_name = 'remesh/index.html'
   context_object_name = 'day_list'
 
@@ -38,6 +38,6 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     ).order_by('-day_date')[:]
 
 
-class DetailView(LoginRequiredMixin, generic.DetailView):
+class DayDetailView(LoginRequiredMixin, generic.DetailView):
   model = Day
   template_name = 'remesh/detail.html'
