@@ -59,6 +59,7 @@ class TeamDetailViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_detail', args=(team1.id,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['team'], team1)
+    self.assertContains(response, "<a id='edit-team'")
 
 class TeamAddFormTests(TestCase):
   def test_add_team_form_exists(self):

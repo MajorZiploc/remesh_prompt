@@ -1,5 +1,6 @@
 <h1>{{ team.pk }}</h1>
 <p>{{ team.members }}</p>
+<a id='edit-team' href="{% url 'remesh:team_edit' team.pk %}">Edit this team</a>
 
 {% if error_message %}
 <p><strong>{{ error_message }}</strong></p>
