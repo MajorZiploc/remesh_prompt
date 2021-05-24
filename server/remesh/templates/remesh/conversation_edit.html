@@ -1,0 +1,5 @@
+<form action="{% url 'remesh:conversation_edit' conversation.pk %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
+</form>
