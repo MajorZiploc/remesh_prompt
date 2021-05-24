@@ -1,46 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
-from .models import Day, WeightUnit, Team
+from .models import Team
 from django.utils import timezone
-from .forms import DayForm, TeamForm
+from .forms import TeamForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
-
-
-class AddDayView(LoginRequiredMixin, generic.FormView):
-  form_class = DayForm
-  template_name = 'remesh/add_day.html'
-  success_url = reverse_lazy('remesh:add_day')
-
-  def get_initial(self):
-    initial = super().get_initial()
-    # if self.request.user.is_authenticated:
-    # initial.update({'name': self.request.user.get_full_name()})
-    return initial
-
-  def form_valid(self, form):
-    form.save()
-    return super().form_valid(form)
-
-
-class DayIndexView(LoginRequiredMixin, generic.ListView):
-  template_name = 'remesh/day_index.html'
-  context_object_name = 'day_list'
-
-  def get_queryset(self):
-    """
-    """
-    return Day.objects.filter(
-        day_date__lte=timezone.now()
-    ).order_by('-day_date')[:]
-
-
-class DayDetailView(LoginRequiredMixin, generic.DetailView):
-  model = Day
-  template_name = 'remesh/day_detail.html'
 
 
 class TeamIndexView(LoginRequiredMixin, generic.ListView):
