@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
 from .models import Day, WeightUnit, Team
@@ -65,6 +65,25 @@ class TeamAddView(LoginRequiredMixin, generic.FormView):
     # if self.request.user.is_authenticated:
     # initial.update({'name': self.request.user.get_full_name()})
     return initial
+
+  def form_valid(self, form):
+    form.save()
+    return super().form_valid(form)
+
+class TeamEditView(LoginRequiredMixin, generic.UpdateView):
+  form_class = TeamForm
+  template_name = 'remesh/team_edit.html'
+  success_url = reverse_lazy('remesh:team_index')
+
+  def get_initial(self):
+    initial = super().get_initial()
+    # if self.request.user.is_authenticated:
+    # initial.update({'name': self.request.user.get_full_name()})
+    return initial
+
+  def get_object(self, *args, **kwargs):
+    team = get_object_or_404(Team, pk=self.kwargs['pk'])
+    return team
 
   def form_valid(self, form):
     form.save()

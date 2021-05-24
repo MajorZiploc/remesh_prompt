@@ -130,7 +130,6 @@ class TeamIndexViewTests(TestCase):
 
   def test_shows_teams(self):
     user, login = create_user(self.client)
-    create_weight_units()
     team1 = create_team(user=user)
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
@@ -161,7 +160,7 @@ class TeamAddFormTests(TestCase):
     for label in labels:
       self.assertContains(response, label)
 
-  def test_add_day_form_post_for_valid_data(self):
+  def test_add_team_form_post_for_valid_data(self):
     user, login = create_user(self.client)
     response = self.client.post(
       reverse('remesh:team_add'),
@@ -171,5 +170,25 @@ class TeamAddFormTests(TestCase):
     )
     self.assertRedirects(response, reverse('remesh:team_add'))
     self.assertEqual(response.status_code, 302)
+    c = Team.objects.all().count()
+    self.assertEqual(c, 1)
+
+class TeamEditFormTests(TestCase):
+  def test_edit_team_form_404_with_invalid_team_id(self):
+    user, login = create_user(self.client)
+    response = self.client.get(reverse('remesh:team_edit', args=(1,)))
+    self.assertEqual(response.status_code, 404)
+
+  def test_edit_day_form_post_for_valid_data(self):
+    user, login = create_user(self.client)
+    team1 = create_team(user=user)
+    response = self.client.post(
+      reverse('remesh:team_edit', args=(1,)),
+      data={
+        'members': ['1']
+      }
+    )
+    self.assertEqual(response.status_code, 302)
+    self.assertRedirects(response, reverse('remesh:team_index'))
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
