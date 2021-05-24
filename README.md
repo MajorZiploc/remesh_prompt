@@ -22,7 +22,7 @@ This is for interview purposes at remesh.ai.
 - python 3.8.5
 - pip 20.0.2
 
-## Setup the server
+## Setup the server - Uses Django 'python manage.py <command>' flow
 
 ### Go into the server folder. All server commands assume you are in that directory.
 
@@ -43,6 +43,9 @@ NOTE: all \*.sh files will work regardless of what directory you call them from
 ### run migrations for db (makes migrations and performs the migrations)
 > ./utility\_scripts/quick\_migrations.sh
 
+### Create super user
+> python manage.py createsuperuser
+
 ### run server
 > ./utility\_scripts/run\_server.sh
 
@@ -52,6 +55,14 @@ NOTE: all \*.sh files will work regardless of what directory you call them from
 ### viewing db migrations
 > python manage.py sqlmigrate <app\_name> <migration\_name>
 
+### Create standard users
+- create a super user (script above)
+- run server (script above)
+- visit http://127.0.0.1:8000/admin/
+- Click Users
+- Click Add User
+- Fill out form
+- This will redirect you to a user page to edit user permissions and such
 
 ## Troubleshooting
 This app was developed on a Windows 10 machine. I have checked many times to ensure that you dont experience issues on Linux. But there is always a change you will encounter one of the following.
