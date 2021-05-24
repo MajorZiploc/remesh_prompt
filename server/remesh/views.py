@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
-from .models import Day, WeightUnit
+from .models import Day, WeightUnit, Team
 from django.utils import timezone
 from .forms import DayForm
 from django.contrib.auth import get_user_model
@@ -41,3 +41,16 @@ class DayIndexView(LoginRequiredMixin, generic.ListView):
 class DayDetailView(LoginRequiredMixin, generic.DetailView):
   model = Day
   template_name = 'remesh/day_detail.html'
+
+
+class TeamIndexView(LoginRequiredMixin, generic.ListView):
+  template_name = 'remesh/team_index.html'
+  context_object_name = 'team_list'
+
+  def get_queryset(self):
+    return Team.objects.all()
+
+
+class TeamDetailView(LoginRequiredMixin, generic.DetailView):
+  model = Team
+  template_name = 'remesh/team_detail.html'
