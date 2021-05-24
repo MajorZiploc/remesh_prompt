@@ -5,6 +5,8 @@ This is a django project that aims to recreate a simple version of remesh.
 
 This is for interview purposes at remesh.ai.
 
+## All scripts mentioned in this readme need to be copied from the readme rendered. Not directly from the file.
+
 ## Requirements
 - python 3.8.x
 - pip 20.x.x
