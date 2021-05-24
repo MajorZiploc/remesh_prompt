@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
               ('body_fat_percentage', models.FloatField(default=0.0)),
               ('muscle_mass_percentage', models.FloatField(default=0.0)),
               ('day_date', models.DateField()),
-              ('weight_units', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='body_comp.weightunits')),
+              ('weight_units', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='remesh.weightunits')),
           ],
       ),
   ]

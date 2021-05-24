@@ -19,7 +19,7 @@ from django.urls.conf import include
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('remesh/', include('body_comp.urls')),
+    path('remesh/', include('remesh.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),

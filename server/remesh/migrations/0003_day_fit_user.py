@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
   dependencies = [
       migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-      ('body_comp', '0002_rename_weightunits_weightunit'),
+      ('remesh', '0002_rename_weightunits_weightunit'),
   ]
 
   operations = [
