@@ -29,6 +29,7 @@ class TeamIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "No teams are available.")
+    self.assertContains(response, "Add New Team")
     self.assertQuerysetEqual(response.context['team_list'], [])
 
   def test_shows_teams(self):
@@ -39,6 +40,7 @@ class TeamIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No teams are available.")
+    self.assertContains(response, "Add New Team")
     self.assertQuerysetEqual(response.context['team_list'], [team1])
 
 class TeamDetailViewTests(TestCase):
