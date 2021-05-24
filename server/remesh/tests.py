@@ -136,3 +136,16 @@ class TeamIndexViewTests(TestCase):
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No teams are available.")
     self.assertQuerysetEqual(response.context['team_list'], [team1])
+
+class TeamDetailViewTests(TestCase):
+  def test_no_team_details_404(self):
+    user, login = create_user(self.client)
+    response = self.client.get(reverse('remesh:team_detail', args=(1,)))
+    self.assertEqual(response.status_code, 404)
+
+  def test_shows_team_details(self):
+    user, login = create_user(self.client)
+    team1 = create_team(user=user)
+    response = self.client.get(reverse('remesh:team_detail', args=(team1.id,)))
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(response.context['team'], team1)
