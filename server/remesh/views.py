@@ -70,7 +70,8 @@ class ConversationDetailView(LoginRequiredMixin, generic.DetailView):
 class ConversationAddView(LoginRequiredMixin, generic.FormView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_add.html'
-  success_url = reverse_lazy('remesh:team_index')
+  def get_success_url(self):
+    return reverse('remesh:conversation_index', args=(self.kwargs['pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
@@ -85,7 +86,9 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
 class ConversationEditView(LoginRequiredMixin, generic.UpdateView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_edit.html'
-  success_url = reverse_lazy('remesh:team_index')
+
+  def get_success_url(self):
+    return reverse('remesh:conversation_index', args=(self.kwargs['pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
