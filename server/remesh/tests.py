@@ -83,7 +83,7 @@ class TeamAddFormTests(TestCase):
         'members': ['1']
       }
     )
-    self.assertRedirects(response, reverse('remesh:team_add'))
+    self.assertRedirects(response, reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 302)
     c = Team.objects.all().count()
     self.assertEqual(c, 1)

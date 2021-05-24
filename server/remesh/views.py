@@ -25,7 +25,7 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
 class TeamAddView(LoginRequiredMixin, generic.FormView):
   form_class = TeamForm
   template_name = 'remesh/team_add.html'
-  success_url = reverse_lazy('remesh:team_add')
+  success_url = reverse_lazy('remesh:team_index')
 
   def get_initial(self):
     initial = super().get_initial()
