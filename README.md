@@ -1,4 +1,9 @@
-# Body Comp
+# Remesh Prompt
+
+## Overview
+This is a django project that aims to recreate a simple version of remesh.
+
+This is for interview purposes at remesh.ai.
 
 ## Requirements
 - python 3.8.x
@@ -15,7 +20,14 @@
 - python 3.8.5
 - pip 20.0.2
 
-## Setup
+## Setup the server
+
+### Go into the server folder. All server commands assume you are in that directory.
+
+> cd ./server
+
+
+NOTE: all \*.sh files will work regardless of what directory you call them from
 
 ### first time up front setup
 > mkdir -p ~/.virtualenvs && python -m venv ~/.virtualenvs/body_comp_server
