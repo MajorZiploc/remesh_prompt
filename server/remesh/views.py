@@ -27,7 +27,7 @@ class AddDayView(LoginRequiredMixin, generic.FormView):
 
 
 class DayIndexView(LoginRequiredMixin, generic.ListView):
-  template_name = 'remesh/index.html'
+  template_name = 'remesh/day_index.html'
   context_object_name = 'day_list'
 
   def get_queryset(self):
@@ -40,4 +40,4 @@ class DayIndexView(LoginRequiredMixin, generic.ListView):
 
 class DayDetailView(LoginRequiredMixin, generic.DetailView):
   model = Day
-  template_name = 'remesh/detail.html'
+  template_name = 'remesh/day_detail.html'

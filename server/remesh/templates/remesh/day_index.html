@@ -8,7 +8,7 @@
   <!-- <li><a href="/day/{{ day.id }}/">{{ day.question_text }}</a></li> -->
   <!-- better approach to the above (tut 3) -->
   <li>
-    <a href="{% url 'remesh:detail' day.id %}">{{ day.day_date }}</a>
+    <a href="{% url 'remesh:day_detail' day.id %}">{{ day.day_date }}</a>
   </li>
   {% endfor %}
 </ul>

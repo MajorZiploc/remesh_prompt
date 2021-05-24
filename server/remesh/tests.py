@@ -29,7 +29,7 @@ class DayIndexViewTests(TestCase):
     If no days exist, an appropriate message is displayed.
     """
     user, login = create_user(self.client)
-    response = self.client.get(reverse('remesh:index'))
+    response = self.client.get(reverse('remesh:day_index'))
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "No days are available.")
     self.assertQuerysetEqual(response.context['day_list'], [])
@@ -41,7 +41,7 @@ class DayIndexViewTests(TestCase):
     user, login = create_user(self.client)
     create_weight_units()
     day1 = create_day(days=-30, user=user)
-    response = self.client.get(reverse('remesh:index'))
+    response = self.client.get(reverse('remesh:day_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No days are available.")
     self.assertQuerysetEqual(response.context['day_list'], [day1])
@@ -51,7 +51,7 @@ class DayDetailViewTests(TestCase):
   def test_no_day_details_404(self):
     user, login = create_user(self.client)
     create_weight_units()
-    response = self.client.get(reverse('remesh:detail', args=(1,)))
+    response = self.client.get(reverse('remesh:day_detail', args=(1,)))
     self.assertEqual(response.status_code, 404)
 
   def test_shows_day_details(self):
@@ -61,7 +61,7 @@ class DayDetailViewTests(TestCase):
     user, login = create_user(self.client)
     create_weight_units()
     day1 = create_day(days=-30, user=user)
-    response = self.client.get(reverse('remesh:detail', args=(day1.id,)))
+    response = self.client.get(reverse('remesh:day_detail', args=(day1.id,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['day'], day1)
 
