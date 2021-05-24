@@ -63,6 +63,7 @@ class TeamDetailViewTests(TestCase):
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['team'], team1)
     self.assertContains(response, "<a id='edit-team'")
+    self.assertContains(response, "<a id='goto-conversations'")
 
 class TeamAddFormTests(TestCase):
   def test_add_team_form_exists(self):
