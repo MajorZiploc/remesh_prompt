@@ -1,0 +1,15 @@
+<!-- {% load static %} -->
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
+
+{% if conversation_list %}
+<ul>
+  {% for conversation in conversation_list %}
+  <li>
+    {{ conversation.title }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No conversations are available.</p>
+{% endif %}

@@ -1,10 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
+from remesh.views import ConversationIndexView
 from .models import Team, Conversation
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.messages import get_messages
-import datetime
+from datetime import datetime, timedelta
 
 
 def create_user(username, password):
@@ -20,6 +21,8 @@ def create_team(user):
   t.members.set([user])
   return t
 
+def create_conversation(moderator, team):
+  return Conversation.objects.create( title = 'Pancakes', date = datetime.now(), start_time = datetime.now(), duration = timedelta(days=2), max_num_of_participants = 50, moderator = moderator, team = team)
 
 class TeamIndexViewTests(TestCase):
   def test_no_teams(self):
@@ -112,3 +115,27 @@ class TeamEditFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:team_index'))
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
+
+class ConversationIndexViewTests(TestCase):
+  def test_no_conversations(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(user=user)
+    login = self.client.login(username=username, password=password)
+    response = self.client.get(reverse('remesh:conversation_index', args=(1,)))
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "No conversations are available.")
+    # self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [])
+
+  def test_conversation_is_in_index(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(user=user)
+    login = self.client.login(username=username, password=password)
+    conversation = create_conversation(moderator=user, team=team1)
+    response = self.client.get(reverse('remesh:conversation_index', args=(conversation.pk,)))
+    self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "No conversations are available.")
+    # self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation])

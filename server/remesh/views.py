@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
-from .models import Team
+from .models import Conversation, Team
 from django.utils import timezone
 from .forms import TeamForm
 from django.contrib.auth import get_user_model
@@ -55,3 +55,10 @@ class TeamEditView(LoginRequiredMixin, generic.UpdateView):
   def form_valid(self, form):
     form.save()
     return super().form_valid(form)
+
+class ConversationIndexView(LoginRequiredMixin, generic.ListView):
+  template_name = 'remesh/conversation_index.html'
+  context_object_name = 'conversation_list'
+
+  def get_queryset(self, *args, **kwargs):
+    return Conversation.objects.filter(team__pk=self.kwargs['team_pk'])
