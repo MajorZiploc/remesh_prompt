@@ -29,7 +29,7 @@ class DayIndexViewTests(TestCase):
     If no days exist, an appropriate message is displayed.
     """
     user, login = create_user(self.client)
-    response = self.client.get(reverse('body_comp:index'))
+    response = self.client.get(reverse('remesh:index'))
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "No days are available.")
     self.assertQuerysetEqual(response.context['day_list'], [])
@@ -41,7 +41,7 @@ class DayIndexViewTests(TestCase):
     user, login = create_user(self.client)
     create_weight_units()
     day1 = create_day(days=-30, user=user)
-    response = self.client.get(reverse('body_comp:index'))
+    response = self.client.get(reverse('remesh:index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No days are available.")
     self.assertQuerysetEqual(response.context['day_list'], [day1])
@@ -51,7 +51,7 @@ class DayDetailViewTests(TestCase):
   def test_no_day_details_404(self):
     user, login = create_user(self.client)
     create_weight_units()
-    response = self.client.get(reverse('body_comp:detail', args=(1,)))
+    response = self.client.get(reverse('remesh:detail', args=(1,)))
     self.assertEqual(response.status_code, 404)
 
   def test_shows_day_details(self):
@@ -61,7 +61,7 @@ class DayDetailViewTests(TestCase):
     user, login = create_user(self.client)
     create_weight_units()
     day1 = create_day(days=-30, user=user)
-    response = self.client.get(reverse('body_comp:detail', args=(day1.id,)))
+    response = self.client.get(reverse('remesh:detail', args=(day1.id,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['day'], day1)
 
@@ -69,7 +69,7 @@ class DayDetailViewTests(TestCase):
 class AddDayFormTests(TestCase):
   def test_add_day_form_exists(self):
     user, login = create_user(self.client)
-    response = self.client.get(reverse('body_comp:add_day'))
+    response = self.client.get(reverse('remesh:add_day'))
     self.assertEqual(response.status_code, 200)
     labels = [
         'Submit',
@@ -86,7 +86,7 @@ class AddDayFormTests(TestCase):
     user, login = create_user(self.client)
     wu = create_weight_units()
     response = self.client.post(
-      reverse('body_comp:add_day'),
+      reverse('remesh:add_day'),
       data={'weight_units': wu.pk, 'day_date': 'fdsa'}
     )
     self.assertEqual(response.status_code, 200)
@@ -98,7 +98,7 @@ class AddDayFormTests(TestCase):
     user, login = create_user(self.client)
     wu = create_weight_units()
     response = self.client.post(
-      reverse('body_comp:add_day'),
+      reverse('remesh:add_day'),
       data={
         'weight_units': wu.pk,
         'day_date': '06/06/2020',
@@ -109,7 +109,7 @@ class AddDayFormTests(TestCase):
         'fit_user': user.pk
       }
     )
-    self.assertRedirects(response, reverse('body_comp:add_day'))
+    self.assertRedirects(response, reverse('remesh:add_day'))
     self.assertEqual(response.status_code, 302)
     c = Day.objects.filter(calories=2500).count()
     self.assertEqual(c, 1)

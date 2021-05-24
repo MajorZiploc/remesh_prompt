@@ -12,8 +12,8 @@ User = get_user_model()
 
 class AddDayView(LoginRequiredMixin, generic.FormView):
   form_class = DayForm
-  template_name = 'body_comp/add_day.html'
-  success_url = reverse_lazy('body_comp:add_day')
+  template_name = 'remesh/add_day.html'
+  success_url = reverse_lazy('remesh:add_day')
 
   def get_initial(self):
     initial = super().get_initial()
@@ -27,7 +27,7 @@ class AddDayView(LoginRequiredMixin, generic.FormView):
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
-  template_name = 'body_comp/index.html'
+  template_name = 'remesh/index.html'
   context_object_name = 'day_list'
 
   def get_queryset(self):
@@ -40,4 +40,4 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
   model = Day
-  template_name = 'body_comp/detail.html'
+  template_name = 'remesh/detail.html'
