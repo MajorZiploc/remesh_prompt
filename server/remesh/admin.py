@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WeightUnit, Day
+from .models import WeightUnit, Day, Team, Conversation
 
 
 class DayAdmin(admin.ModelAdmin):
@@ -8,3 +8,5 @@ class DayAdmin(admin.ModelAdmin):
 
 admin.site.register(WeightUnit)
 admin.site.register(Day, DayAdmin)
+admin.site.register(Team)
+admin.site.register(Conversation)
