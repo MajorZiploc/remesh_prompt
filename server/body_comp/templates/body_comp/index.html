@@ -1,0 +1,17 @@
+<!-- {% load static %} -->
+
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
+
+{% if day_list %}
+<ul>
+  {% for day in day_list %}
+  <!-- <li><a href="/day/{{ day.id }}/">{{ day.question_text }}</a></li> -->
+  <!-- better approach to the above (tut 3) -->
+  <li>
+    <a href="{% url 'body_comp:detail' day.id %}">{{ day.day_date }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No days are available.</p>
+{% endif %}
