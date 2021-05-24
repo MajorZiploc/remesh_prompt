@@ -5,15 +5,15 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('remesh', '0007_rename_conversion_conversation'),
-    ]
+  dependencies = [
+      ('remesh', '0007_rename_conversion_conversation'),
+  ]
 
-    operations = [
-        migrations.DeleteModel(
-            name='Day',
-        ),
-        migrations.DeleteModel(
-            name='WeightUnit',
-        ),
-    ]
+  operations = [
+      migrations.DeleteModel(
+          name='Day',
+      ),
+      migrations.DeleteModel(
+          name='WeightUnit',
+      ),
+  ]

@@ -22,6 +22,7 @@ class TeamDetailView(LoginRequiredMixin, generic.DetailView):
   model = Team
   template_name = 'remesh/team_detail.html'
 
+
 class TeamAddView(LoginRequiredMixin, generic.FormView):
   form_class = TeamForm
   template_name = 'remesh/team_add.html'
@@ -36,6 +37,7 @@ class TeamAddView(LoginRequiredMixin, generic.FormView):
   def form_valid(self, form):
     form.save()
     return super().form_valid(form)
+
 
 class TeamEditView(LoginRequiredMixin, generic.UpdateView):
   form_class = TeamForm
@@ -56,6 +58,7 @@ class TeamEditView(LoginRequiredMixin, generic.UpdateView):
     form.save()
     return super().form_valid(form)
 
+
 class ConversationIndexView(LoginRequiredMixin, generic.ListView):
   template_name = 'remesh/conversation_index.html'
   context_object_name = 'conversation_list'
@@ -63,13 +66,16 @@ class ConversationIndexView(LoginRequiredMixin, generic.ListView):
   def get_queryset(self, *args, **kwargs):
     return Conversation.objects.filter(team__pk=self.kwargs['team_pk'])
 
+
 class ConversationDetailView(LoginRequiredMixin, generic.DetailView):
   model = Conversation
   template_name = 'remesh/conversation_detail.html'
 
+
 class ConversationAddView(LoginRequiredMixin, generic.FormView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_add.html'
+
   def get_success_url(self):
     return reverse('remesh:conversation_index', args=(self.kwargs['pk'],))
 
@@ -82,6 +88,7 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
   def form_valid(self, form):
     form.save()
     return super().form_valid(form)
+
 
 class ConversationEditView(LoginRequiredMixin, generic.UpdateView):
   form_class = ConversationForm
@@ -103,4 +110,3 @@ class ConversationEditView(LoginRequiredMixin, generic.UpdateView):
   def form_valid(self, form):
     form.save()
     return super().form_valid(form)
-

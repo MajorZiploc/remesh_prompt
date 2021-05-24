@@ -12,6 +12,7 @@ def create_user(username, password):
   user = User.objects.create_user(username=username, password=password)
   return user
 
+
 def get_user_creds():
   return 'testuser', '12345'
 
@@ -21,8 +22,18 @@ def create_team(user):
   t.members.set([user])
   return t
 
+
 def create_conversation(moderator, team):
-  return Conversation.objects.create( title = 'Pancakes', date = datetime.now(), start_time = datetime.now(), duration = timedelta(days=2), max_num_of_participants = 50, moderator = moderator, team = team)
+  return Conversation.objects.create(
+      title='Pancakes',
+      date=datetime.now(),
+      start_time=datetime.now(),
+      duration=timedelta(
+          days=2),
+      max_num_of_participants=50,
+      moderator=moderator,
+      team=team)
+
 
 class TeamIndexViewTests(TestCase):
   def test_no_teams(self):
@@ -46,6 +57,7 @@ class TeamIndexViewTests(TestCase):
     self.assertContains(response, "Add New Team")
     self.assertQuerysetEqual(response.context['team_list'], [team1])
 
+
 class TeamDetailViewTests(TestCase):
   def test_no_team_details_404(self):
     username, password = get_user_creds()
@@ -64,6 +76,7 @@ class TeamDetailViewTests(TestCase):
     self.assertEqual(response.context['team'], team1)
     self.assertContains(response, "<a id='edit-team'")
     self.assertContains(response, "<a id='goto-conversations'")
+
 
 class TeamAddFormTests(TestCase):
   def test_add_team_form_exists(self):
@@ -93,6 +106,7 @@ class TeamAddFormTests(TestCase):
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
 
+
 class TeamEditFormTests(TestCase):
   def test_edit_team_form_404_with_invalid_team_id(self):
     username, password = get_user_creds()
@@ -116,6 +130,7 @@ class TeamEditFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:team_index'))
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
+
 
 class ConversationIndexViewTests(TestCase):
   def test_no_conversations(self):
@@ -141,6 +156,7 @@ class ConversationIndexViewTests(TestCase):
     # self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation])
 
+
 class ConversationDetailViewTests(TestCase):
   def test_no_conversation_details_404(self):
     username, password = get_user_creds()
@@ -160,6 +176,7 @@ class ConversationDetailViewTests(TestCase):
     self.assertEqual(response.context['conversation'], conversation1)
     self.assertContains(response, 'Edit this conversation')
     self.assertContains(response, "<a id='edit-conversation'")
+
 
 class ConversationAddFormTests(TestCase):
   def test_add_conversation_form_exists(self):
@@ -200,6 +217,7 @@ class ConversationAddFormTests(TestCase):
   #   self.assertEqual(response.status_code, 302)
   #   c = Conversation.objects.all().count()
   #   self.assertEqual(c, 1)
+
 
 class ConversationEditFormTests(TestCase):
   def test_edit_conversation_form_404_with_invalid_conversation_id(self):
