@@ -3,7 +3,7 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from .models import Day, WeightUnit, Team
 from django.utils import timezone
-from .forms import DayForm
+from .forms import DayForm, TeamForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -54,3 +54,18 @@ class TeamIndexView(LoginRequiredMixin, generic.ListView):
 class TeamDetailView(LoginRequiredMixin, generic.DetailView):
   model = Team
   template_name = 'remesh/team_detail.html'
+
+class TeamAddView(LoginRequiredMixin, generic.FormView):
+  form_class = TeamForm
+  template_name = 'remesh/team_add.html'
+  success_url = reverse_lazy('remesh:team_add')
+
+  def get_initial(self):
+    initial = super().get_initial()
+    # if self.request.user.is_authenticated:
+    # initial.update({'name': self.request.user.get_full_name()})
+    return initial
+
+  def form_valid(self, form):
+    form.save()
+    return super().form_valid(form)

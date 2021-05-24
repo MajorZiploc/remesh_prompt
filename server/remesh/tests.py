@@ -149,3 +149,27 @@ class TeamDetailViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_detail', args=(team1.id,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['team'], team1)
+
+class TeamAddFormTests(TestCase):
+  def test_add_team_form_exists(self):
+    user, login = create_user(self.client)
+    response = self.client.get(reverse('remesh:team_add'))
+    self.assertEqual(response.status_code, 200)
+    labels = [
+        'Members',
+        'Submit']
+    for label in labels:
+      self.assertContains(response, label)
+
+  def test_add_day_form_post_for_valid_data(self):
+    user, login = create_user(self.client)
+    response = self.client.post(
+      reverse('remesh:team_add'),
+      data={
+        'members': ['1']
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:team_add'))
+    self.assertEqual(response.status_code, 302)
+    c = Team.objects.all().count()
+    self.assertEqual(c, 1)
