@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from .models import Day, WeightUnit
+from .models import Day, WeightUnit, Team, Conversation
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.messages import get_messages
@@ -21,6 +21,12 @@ def create_day(days, user):
   time = timezone.now() + datetime.timedelta(days=days)
   w = WeightUnit.objects.get(name='Pounds')
   return w.day_set.create(day_date=time, fit_user=user)
+
+
+def create_team(user):
+  t = Team.objects.create()
+  t.members.set([user])
+  return t
 
 
 class DayIndexViewTests(TestCase):
@@ -113,3 +119,20 @@ class AddDayFormTests(TestCase):
     self.assertEqual(response.status_code, 302)
     c = Day.objects.filter(calories=2500).count()
     self.assertEqual(c, 1)
+
+class TeamIndexViewTests(TestCase):
+  def test_no_teams(self):
+    user, login = create_user(self.client)
+    response = self.client.get(reverse('remesh:team_index'))
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "No teams are available.")
+    self.assertQuerysetEqual(response.context['team_list'], [])
+
+  def test_shows_teams(self):
+    user, login = create_user(self.client)
+    create_weight_units()
+    team1 = create_team(user=user)
+    response = self.client.get(reverse('remesh:team_index'))
+    self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "No teams are available.")
+    self.assertQuerysetEqual(response.context['team_list'], [team1])
