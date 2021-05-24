@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 User = get_user_model()
 
 class ConversationIndexView(LoginRequiredMixin, generic.ListView):
-  template_name = 'remesh/conversation_index.html'
+  template_name = 'remesh/team_conversation_index.html'
   context_object_name = 'conversation_list'
 
   def get_queryset(self, *args, **kwargs):
@@ -27,7 +27,7 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
   template_name = 'remesh/conversation_add.html'
 
   def get_success_url(self):
-    return reverse('remesh:conversation_index', args=(self.kwargs['pk'],))
+    return reverse('remesh:team_conversation_index', args=(self.kwargs['pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
@@ -45,7 +45,7 @@ class ConversationEditView(LoginRequiredMixin, generic.UpdateView):
   template_name = 'remesh/conversation_edit.html'
 
   def get_success_url(self):
-    return reverse('remesh:conversation_index', args=(self.kwargs['pk'],))
+    return reverse('remesh:team_conversation_index', args=(self.kwargs['pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
