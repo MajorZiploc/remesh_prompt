@@ -6,7 +6,7 @@
 <ul>
   {% for team in team_list %}
   <li>
-    <a href="{% url 'remesh:team_detail' team.id %}">{{ team.pk }}</a>
+    <a href="{% url 'remesh:team_detail' team.pk %}">{{ team.pk }}</a>
   </li>
   {% endfor %}
 </ul>

@@ -59,7 +59,7 @@ class TeamDetailViewTests(TestCase):
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
     team1 = create_team(user=user)
-    response = self.client.get(reverse('remesh:team_detail', args=(team1.id,)))
+    response = self.client.get(reverse('remesh:team_detail', args=(team1.pk,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['team'], team1)
     self.assertContains(response, "<a id='edit-team'")
