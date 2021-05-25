@@ -55,3 +55,10 @@ class TeamEditView(LoginRequiredMixin, generic.UpdateView):
   def form_valid(self, form):
     form.save()
     return super().form_valid(form)
+
+
+class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
+  model = Team
+  template_name = 'remesh/team_delete.html'
+  success_url = reverse_lazy('remesh:team_index')
+  context_object_name = 'object'
