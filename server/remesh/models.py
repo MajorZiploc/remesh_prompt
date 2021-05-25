@@ -15,3 +15,25 @@ class Conversation(models.Model):
   max_num_of_participants = models.PositiveIntegerField()
   moderator = models.ForeignKey(User, on_delete=models.CASCADE)
   team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+class QuestionType(models.Model):
+  label = models.CharField(max_length=250)
+
+
+class Question(models.Model):
+  type = models.ForeignKey(QuestionType, on_delete=models.CASCADE)
+  conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
+  value = models.TextField()
+
+
+class Choice(models.Model):
+  question = models.ForeignKey(Question, on_delete=models.CASCADE)
+  value = models.TextField()
+
+
+class Response(models.Model):
+  question = models.ForeignKey(Question, on_delete=models.CASCADE)
+  participant = models.ForeignKey(User, on_delete=models.CASCADE)
+  choice = models.ForeignKey(Choice, on_delete=models.CASCADE, blank=True, null=True)
+  value = models.TextField()
+
