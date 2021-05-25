@@ -96,7 +96,7 @@ class TeamEditFormTests(TestCase):
     login = self.client.login(username=username, password=password)
     team1 = create_team(name="foodies", users=[user])
     response = self.client.post(
-      reverse('remesh:team_edit', args=(1,)),
+      reverse('remesh:team_edit', args=(team1.pk,)),
       data={
         'name': 'foodies',
         'members': ['1']
@@ -113,7 +113,7 @@ class TeamDeleteFormTests(TestCase):
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
     team1 = create_team(name="foodies", users=[user])
-    response = self.client.post(reverse('remesh:team_delete', args=(1,)))
+    response = self.client.post(reverse('remesh:team_delete', args=(team1.pk,)))
     self.assertEqual(response.status_code, 302)
     self.assertRedirects(response, reverse('remesh:team_index'))
     c = Team.objects.all().count()

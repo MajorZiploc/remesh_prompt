@@ -13,7 +13,7 @@ class ConversationIndexViewTests(TestCase):
     user = create_user(username, password)
     team1 = create_team(name="foodies", users=[user])
     login = self.client.login(username=username, password=password)
-    response = self.client.get(reverse('remesh:team_conversation_index', args=(1,)))
+    response = self.client.get(reverse('remesh:team_conversation_index', args=(team1.pk,)))
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "No conversations are available.")
     # self.assertContains(response, "Add New Conversation")
@@ -109,7 +109,7 @@ class ConversationEditFormTests(TestCase):
   #   conversation1 = create_conversation(moderator=user, team=team1)
   #   login = self.client.login(username=username, password=password)
   #   response = self.client.post(
-  #     reverse('remesh:conversation_edit', args=(1,)),
+  #     reverse('remesh:conversation_edit', args=(conversation1.pk,)),
   #     data={
   #       'moderator': ['1'],
   #       'team': ['1'],
