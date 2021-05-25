@@ -23,7 +23,7 @@ class TeamIndexViewTests(TestCase):
     username, password = get_user_creds()
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No teams are available.")
@@ -43,7 +43,7 @@ class TeamDetailViewTests(TestCase):
     username, password = get_user_creds()
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     response = self.client.get(reverse('remesh:team_detail', args=(team1.pk,)))
     self.assertEqual(response.status_code, 200)
     self.assertEqual(response.context['team'], team1)
@@ -92,7 +92,7 @@ class TeamEditFormTests(TestCase):
     username, password = get_user_creds()
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     response = self.client.post(
       reverse('remesh:team_edit', args=(1,)),
       data={

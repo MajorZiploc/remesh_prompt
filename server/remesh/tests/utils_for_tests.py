@@ -11,9 +11,9 @@ def get_user_creds():
   return 'testuser', '12345'
 
 
-def create_team(user):
+def create_team(users):
   t = Team.objects.create()
-  t.members.set([user])
+  t.members.set(users)
   return t
 
 def create_conversation(moderator, team):

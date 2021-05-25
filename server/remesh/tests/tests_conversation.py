@@ -11,7 +11,7 @@ class ConversationIndexViewTests(TestCase):
   def test_no_conversations(self):
     username, password = get_user_creds()
     user = create_user(username, password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     login = self.client.login(username=username, password=password)
     response = self.client.get(reverse('remesh:team_conversation_index', args=(1,)))
     self.assertEqual(response.status_code, 200)
@@ -22,7 +22,7 @@ class ConversationIndexViewTests(TestCase):
   def test_conversation_is_in_index(self):
     username, password = get_user_creds()
     user = create_user(username, password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     login = self.client.login(username=username, password=password)
     conversation = create_conversation(moderator=user, team=team1)
     response = self.client.get(reverse('remesh:team_conversation_index', args=(conversation.pk,)))
@@ -43,7 +43,7 @@ class ConversationDetailViewTests(TestCase):
   def test_shows_conversation_details(self):
     username, password = get_user_creds()
     user = create_user(username, password)
-    team1 = create_team(user=user)
+    team1 = create_team(users=[user])
     conversation1 = create_conversation(moderator=user, team=team1)
     login = self.client.login(username=username, password=password)
     response = self.client.get(reverse('remesh:conversation_detail', args=(conversation1.pk,)))
@@ -75,7 +75,7 @@ class ConversationAddFormTests(TestCase):
   # def test_add_conversation_form_post_for_valid_data(self):
   #   username, password = get_user_creds()
   #   user = create_user(username, password)
-  #   team1 = create_team(user=user)
+  #   team1 = create_team(users=[user])
   #   login = self.client.login(username=username, password=password)
   #   response = self.client.post(
   #     reverse('remesh:conversation_add'),
@@ -105,7 +105,7 @@ class ConversationEditFormTests(TestCase):
   # def test_edit_conversation_form_post_for_valid_data(self):
   #   username, password = get_user_creds()
   #   user = create_user(username, password)
-  #   team1 = create_team(user=user)
+  #   team1 = create_team(users=[user])
   #   conversation1 = create_conversation(moderator=user, team=team1)
   #   login = self.client.login(username=username, password=password)
   #   response = self.client.post(
