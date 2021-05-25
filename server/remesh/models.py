@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Team(models.Model):
+  name = models.CharField(max_length=250)
   members = models.ManyToManyField(User)
 
 

@@ -11,8 +11,8 @@ def get_user_creds():
   return 'testuser', '12345'
 
 
-def create_team(users):
-  t = Team.objects.create()
+def create_team(name,users):
+  t = Team.objects.create(name=name)
   t.members.set(users)
   return t
 
