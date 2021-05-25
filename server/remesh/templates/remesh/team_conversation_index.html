@@ -1,7 +1,6 @@
-<!-- {% load static %} -->
+{% extends 'base.html' %}
 
-<!-- <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" /> -->
-
+{% block content %}
 {% if conversation_list %}
 <ul>
   {% for conversation in conversation_list %}
@@ -13,3 +12,5 @@
 {% else %}
 <p>No conversations are available.</p>
 {% endif %}
+{% endblock %}
+
