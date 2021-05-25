@@ -108,13 +108,13 @@ class TeamEditFormTests(TestCase):
     self.assertEqual(c, 1)
 
 class TeamDeleteFormTests(TestCase):
-  def test_delete_team_form_post_for_valid_data(self):
+  def test_delete_team_form_post_for_valid_data_deletes_the_correct_team(self):
     username, password = get_user_creds()
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
     team1 = create_team(name="foodies", users=[user])
+    team2 = create_team(name="shoe lovers", users=[user])
     response = self.client.post(reverse('remesh:team_delete', args=(team1.pk,)))
     self.assertEqual(response.status_code, 302)
     self.assertRedirects(response, reverse('remesh:team_index'))
-    c = Team.objects.all().count()
-    self.assertEqual(c, 0)
+    self.assertEqual(list(Team.objects.all()), [team2])
