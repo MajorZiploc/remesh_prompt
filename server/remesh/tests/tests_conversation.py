@@ -5,6 +5,58 @@ from remesh.models import Conversation
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from .utils_for_tests import *
+from django.utils import timezone
+from datetime import timedelta
+
+
+class ConversationModelTests(TestCase):
+  def test_is_active(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    now = timezone.now()
+    start_time = now - timedelta(minutes=60)
+    conversation = create_conversation(
+      moderator=user, team=team1,
+      start_date_time=start_time,
+      duration=timedelta(minutes=120))
+    self.assertTrue(conversation.is_active())
+
+  def test_is_not_active_past(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    now = timezone.now()
+    start_time = now - timedelta(minutes=121)
+    conversation = create_conversation(
+      moderator=user, team=team1,
+      start_date_time=start_time,
+      duration=timedelta(minutes=120))
+    self.assertFalse(conversation.is_active())
+
+  def test_is_not_active_future(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    now = timezone.now()
+    start_time = now + timedelta(minutes=121)
+    conversation = create_conversation(
+      moderator=user, team=team1,
+      start_date_time=start_time,
+      duration=timedelta(minutes=120))
+    self.assertFalse(conversation.is_active())
+
+  def test_is_not_active_future_starting_soon(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    now = timezone.now()
+    start_time = now + timedelta(minutes=1)
+    conversation = create_conversation(
+      moderator=user, team=team1,
+      start_date_time=start_time,
+      duration=timedelta(minutes=2))
+    self.assertFalse(conversation.is_active())
 
 
 class ConversationIndexViewTests(TestCase):
