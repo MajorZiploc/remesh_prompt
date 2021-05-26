@@ -25,6 +25,19 @@ class Conversation(models.Model):
     end_date_time = self.start_date_time + self.duration
     return self.start_date_time <= now <= end_date_time
 
+  def is_past(self):
+    now = timezone.now()
+    end_date_time = self.start_date_time + self.duration
+    return self.start_date_time > now
+
+  def is_future(self):
+    now = timezone.now()
+    end_date_time = self.start_date_time + self.duration
+    return end_date_time < now
+
+  class Meta():
+    ordering = ['title']
+
 
 class QuestionType(models.Model):
   label = models.CharField(max_length=250)

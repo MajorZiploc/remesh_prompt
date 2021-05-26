@@ -80,8 +80,70 @@ class ConversationIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_conversation_index', args=(conversation.pk,)))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No conversations are available.")
+    self.assertContains(response, "All Conversations")
     # self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation])
+
+
+class ConversationActiveViewTests(TestCase):
+  def test_no_conversations(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    login = self.client.login(username=username, password=password)
+    response = self.client.get(reverse('remesh:team_conversation_active', args=(team1.pk,)))
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "No conversations are available.")
+    # self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [])
+
+  def test_conversation_is_in_active(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    team2 = create_team(name="foodies2", users=[user])
+    login = self.client.login(username=username, password=password)
+    conversation1 = create_conversation(
+        title='Pancakes',
+        moderator=user,
+        team=team1,
+        start_date_time=timezone.now() -
+        timedelta(
+            minutes=10),
+        duration=timedelta(
+            minutes=20))
+    conversation2 = create_conversation(
+        title='Tuna dishes',
+        moderator=user,
+        team=team1,
+        start_date_time=timezone.now() -
+        timedelta(
+            minutes=40),
+        duration=timedelta(
+            minutes=143))
+    conversation3 = create_conversation(
+        title='ZTuna dishes',
+        moderator=user,
+        team=team1,
+        start_date_time=timezone.now() -
+        timedelta(
+            minutes=40),
+        duration=timedelta(
+            minutes=5))
+    conversation4 = create_conversation(
+        title='zPancakes',
+        moderator=user,
+        team=team2,
+        start_date_time=timezone.now() -
+        timedelta(
+            minutes=50),
+        duration=timedelta(
+            minutes=20))
+    response = self.client.get(reverse('remesh:team_conversation_active', args=(conversation1.pk,)))
+    self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "No conversations are available.")
+    self.assertContains(response, "Active Conversations")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation1, conversation2])
 
 
 class ConversationDetailViewTests(TestCase):

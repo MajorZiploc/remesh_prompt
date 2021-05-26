@@ -17,6 +17,53 @@ class ConversationIndexView(LoginRequiredMixin, generic.ListView):
   def get_queryset(self, *args, **kwargs):
     return Conversation.objects.filter(team__pk=self.kwargs['team_pk'])
 
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['title'] = 'All Conversations'
+    return context
+
+
+class ConversationActiveView(LoginRequiredMixin, generic.ListView):
+  template_name = 'remesh/team_conversation_index.html'
+  context_object_name = 'conversation_list'
+
+  def get_queryset(self, *args, **kwargs):
+    return [conv for conv in Conversation.objects
+            .filter(team__pk=self.kwargs['team_pk']) if conv.is_active()]
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['title'] = 'Active Conversations'
+    return context
+
+
+class ConversationPastView(LoginRequiredMixin, generic.ListView):
+  template_name = 'remesh/team_conversation_past.html'
+  context_object_name = 'conversation_list'
+
+  def get_queryset(self, *args, **kwargs):
+    return [conv for conv in Conversation.objects
+            .filter(team__pk=self.kwargs['team_pk']) if conv.is_past()]
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['title'] = 'Past Conversations'
+    return context
+
+
+class ConversationFutureView(LoginRequiredMixin, generic.ListView):
+  template_name = 'remesh/team_conversation_future.html'
+  context_object_name = 'conversation_list'
+
+  def get_queryset(self, *args, **kwargs):
+    return [conv for conv in Conversation.objects
+            .filter(team__pk=self.kwargs['team_pk']) if conv.is_future()]
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['title'] = 'Future Conversations'
+    return context
+
 
 class ConversationDetailView(LoginRequiredMixin, generic.DetailView):
   model = Conversation
