@@ -8,6 +8,9 @@ class Team(models.Model):
   name = models.CharField(max_length=250)
   members = models.ManyToManyField(User)
 
+  class Meta():
+    ordering = ['name']
+
 
 class Conversation(models.Model):
   title = models.CharField(max_length=250)

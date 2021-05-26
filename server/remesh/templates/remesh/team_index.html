@@ -5,13 +5,13 @@
 <ul>
   {% for team in team_list %}
   <li>
-    <a href="{% url 'remesh:team_detail' team.pk %}">{{ team.pk }}</a>
+    <a id="team-list-item-{{ forloop.counter0 }}" href="{% url 'remesh:team_detail' team.pk %}">{{ team.pk }}</a>
   </li>
   {% endfor %}
 </ul>
 {% else %}
 <p>No teams are available.</p>
 {% endif %}
-<a href="{% url 'remesh:team_add' %}">Add New Team</a>
+<a id="add-team" href="{% url 'remesh:team_add' %}">Add New Team</a>
 {% endblock %}
 

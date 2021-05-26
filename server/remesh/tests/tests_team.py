@@ -15,7 +15,8 @@ class TeamIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "No teams are available.")
-    self.assertContains(response, "Add New Team")
+    self.assertContains(response, '<a id="add-team"')
+    self.assertNotContains(response, '<a id="team-list-item-')
     self.assertQuerysetEqual(response.context['team_list'], [])
 
   def test_shows_teams(self):
@@ -23,11 +24,14 @@ class TeamIndexViewTests(TestCase):
     user = create_user(username, password)
     login = self.client.login(username=username, password=password)
     team1 = create_team(name="foodies", users=[user])
+    team2 = create_team(name="show lovers", users=[user])
     response = self.client.get(reverse('remesh:team_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No teams are available.")
-    self.assertContains(response, "Add New Team")
-    self.assertQuerysetEqual(response.context['team_list'], [team1])
+    self.assertContains(response, '<a id="add-team"')
+    self.assertQuerysetEqual(response.context['team_list'], [team1, team2])
+    for i in ['0', '1']:
+      self.assertContains(response, '<a id="team-list-item-' + i)
 
 
 class TeamDetailViewTests(TestCase):
