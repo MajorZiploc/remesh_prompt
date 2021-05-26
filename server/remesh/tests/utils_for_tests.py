@@ -17,13 +17,16 @@ def create_team(name,users):
   t.members.set(users)
   return t
 
-def create_conversation(moderator, team):
+
+def create_conversation(moderator, team, title='Pancakes',
+start_date_time=timezone.now(), duration=timedelta(days=2),
+max_num_of_participants=50
+):
   return Conversation.objects.create(
-      title='Pancakes',
-      start_date_time=timezone.now(),
-      duration=timedelta(
-          days=2),
-      max_num_of_participants=50,
+      title=title,
+      start_date_time=start_date_time,
+      duration=duration,
+      max_num_of_participants=max_num_of_participants,
       moderator=moderator,
       team=team)
 
