@@ -3,7 +3,6 @@ from django.urls import reverse
 from remesh.views import ConversationIndexView
 from remesh.models import Team, Conversation
 from django.contrib.auth.models import User
-from django.utils import timezone
 from django.contrib.messages import get_messages
 from .utils_for_tests import *
 
@@ -62,8 +61,7 @@ class ConversationAddFormTests(TestCase):
     self.assertEqual(response.status_code, 200)
     labels = [
         'Title',
-        'Date',
-        'Start time',
+        'Start date time',
         'Duration',
         'Max num of participants',
         'Moderator',
