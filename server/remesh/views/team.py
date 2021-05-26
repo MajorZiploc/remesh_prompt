@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
-from remesh.models import  Team
+from remesh.models import Team
 from remesh.forms import TeamForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
+
 
 class TeamIndexView(LoginRequiredMixin, generic.ListView):
   template_name = 'remesh/team_index.html'

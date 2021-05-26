@@ -106,6 +106,7 @@ class TeamEditFormTests(TestCase):
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
 
+
 class TeamDeleteFormTests(TestCase):
   def test_delete_team_form_post_for_valid_data_deletes_the_correct_team(self):
     username, password = get_user_creds()

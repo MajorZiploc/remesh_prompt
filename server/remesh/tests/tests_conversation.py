@@ -1,10 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
 from remesh.views import ConversationIndexView
-from remesh.models import  Conversation
+from remesh.models import Conversation
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from .utils_for_tests import *
+
 
 class ConversationIndexViewTests(TestCase):
   def test_no_conversations(self):

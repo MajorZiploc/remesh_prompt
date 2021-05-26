@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 User = get_user_model()
 
+
 class ConversationIndexView(LoginRequiredMixin, generic.ListView):
   template_name = 'remesh/team_conversation_index.html'
   context_object_name = 'conversation_list'

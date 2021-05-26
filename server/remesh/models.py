@@ -16,10 +16,12 @@ class Conversation(models.Model):
   max_num_of_participants = models.PositiveIntegerField()
   moderator = models.ForeignKey(User, on_delete=models.CASCADE)
   team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
   def is_active(self):
     now = timezone.now()
     end_date_time = self.start_date_time + self.duration
     return self.start_date_time <= now <= end_date_time
+
 
 class QuestionType(models.Model):
   label = models.CharField(max_length=250)
@@ -41,4 +43,3 @@ class Response(models.Model):
   participant = models.ForeignKey(User, on_delete=models.CASCADE)
   choice = models.ForeignKey(Choice, on_delete=models.CASCADE, blank=True, null=True)
   value = models.TextField()
-
