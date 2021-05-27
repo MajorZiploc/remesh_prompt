@@ -1,5 +1,4 @@
-from remesh.models import Team, Conversation
-from django.contrib.auth.models import User
+from remesh.models import Team, Conversation, User
 from datetime import timedelta
 from django.utils import timezone
 

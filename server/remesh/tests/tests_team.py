@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
 from remesh.models import Team
-from django.contrib.auth.models import User
 from django.utils import timezone
 from django.contrib.messages import get_messages
 from .utils_for_tests import *
