@@ -52,6 +52,9 @@ class TeamDetailViewTests(TestCase):
     self.assertEqual(response.context['team'], team1)
     self.assertContains(response, "<a id='edit-team'")
     self.assertContains(response, "<a id='goto-conversations'")
+    self.assertContains(response, "<a id='goto-active-conversations'")
+    self.assertContains(response, "<a id='goto-future-conversations'")
+    self.assertContains(response, "<a id='goto-past-conversations'")
 
 
 class TeamAddFormTests(TestCase):
