@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{% url 'remesh:conversation_edit' conversation.pk %}" method="post">
+<form method="post">
   {% csrf_token %}
   {{ form }}
   <input type="submit" value="Submit">
