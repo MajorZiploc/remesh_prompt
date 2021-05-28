@@ -3,8 +3,30 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 
+
+class Role(models.Model):
+  '''
+  The Role entries are managed by the system,
+  automatically created via a Django data migration.
+  '''
+  PARTICIPANT = 1
+  TEAMMEMBER = 2
+  CHATMODERATOR = 3
+  ADMIN = 4
+  ROLE_CHOICES = (
+      (PARTICIPANT, 'participant'),
+      (TEAMMEMBER, 'teammember'),
+      (CHATMODERATOR, 'chatmoderator'),
+      (ADMIN, 'admin'),
+  )
+
+  id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
+
+  def __str__(self):
+      return self.get_id_display()
+
 class User(AbstractUser):
-  pass
+  roles = models.ManyToManyField(Role)
 
 
 class Team(models.Model):
