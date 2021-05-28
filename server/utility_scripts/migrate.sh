@@ -6,3 +6,5 @@ manage="$SCRIPTPATH/../manage.py"
 
 python "$manage" migrate
 
+python "$manage" migrate remesh
+
