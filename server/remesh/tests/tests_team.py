@@ -103,7 +103,7 @@ class TeamEditFormTests(TestCase):
     response = self.client.post(
       reverse('remesh:team_edit', args=(team1.pk,)),
       data={
-        'name': 'foodies',
+        'name': 'shoe lovers',
         'members': ['1']
       }
     )
@@ -111,6 +111,8 @@ class TeamEditFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:team_index'))
     c = Team.objects.all().count()
     self.assertEqual(c, 1)
+    t = Team.objects.get(pk=team1.pk)
+    self.assertEqual(t.name, 'shoe lovers')
 
 
 class TeamDeleteFormTests(TestCase):

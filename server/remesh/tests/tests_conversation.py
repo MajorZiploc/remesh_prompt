@@ -212,24 +212,25 @@ class ConversationEditFormTests(TestCase):
     response = self.client.get(reverse('remesh:conversation_edit', args=(1,)))
     self.assertEqual(response.status_code, 404)
 
-  # def test_edit_conversation_form_post_for_valid_data(self):
-  #   username, password = get_user_creds()
-  #   user = create_user(username, password)
-  #   team1 = create_team(name="foodies", users=[user])
-  #   conversation1 = create_conversation(moderator=user, team=team1)
-  #   login = self.client.login(username=username, password=password)
-  #   response = self.client.post(
-  #     reverse('remesh:conversation_edit', args=(conversation1.pk,)),
-  #     data={
-  #       'moderator': ['1'],
-  #       'team': ['1'],
-  #       'title': 'Pancakes',
-  #       'date': "2020-05-24",
-  #       'duration': '60',
-  #       'max_num_of_participants': '40'
-  #     }
-  #   )
-  #   self.assertEqual(response.status_code, 302)
-  #   self.assertRedirects(response, reverse('remesh:team_index'))
-  #   c = Conversation.objects.all().count()
-  #   self.assertEqual(c, 1)
+  def test_edit_conversation_form_post_for_valid_data(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    conversation1 = create_conversation(moderator=user, team=team1, title='Pancakes')
+    login = self.client.login(username=username, password=password)
+    response = self.client.post(
+      reverse('remesh:conversation_edit', args=(conversation1.pk,)),
+      data={
+        'moderator': '1',
+        'title': 'Candy Worms',
+        'start_date_time': "01/01/2020",
+        'duration': '60',
+        'max_num_of_participants': '40'
+      }
+    )
+    self.assertEqual(response.status_code, 302)
+    self.assertRedirects(response, reverse('remesh:team_conversation_index', args=(team1.pk,)))
+    c = Conversation.objects.all().count()
+    self.assertEqual(c, 1)
+    conv = Conversation.objects.get(pk=conversation1.pk)
+    self.assertEqual(conv.title, 'Candy Worms')
