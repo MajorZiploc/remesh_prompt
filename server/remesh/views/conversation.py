@@ -75,7 +75,7 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
   template_name = 'remesh/conversation_add.html'
 
   def get_success_url(self):
-    return reverse('remesh:team_conversation_index', args=(self.kwargs['pk'],))
+    return reverse('remesh:team_conversation_index', args=(self.kwargs['team_pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
@@ -84,11 +84,15 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
     return initial
 
   def form_valid(self, form):
-    form = ConversationForm(self.request.POST)
-    conversation = form.save(commit=False)
-    conversation.team__pk = self.kwargs['team_id']
-    conversation.save()
+    conversation = Conversation(team=Team.objects.get(pk=self.kwargs['team_pk']))
+    form = ConversationForm(self.request.POST, instance=conversation)
+    form.save()
     return super().form_valid(form)
+    # form = ConversationForm(self.request.POST)
+    # conversation = form.save(commit=False)
+    # conversation.team__pk = self.kwargs['team_pk']
+    # conversation.save()
+    # return super().form_valid(form)
 
 
 class ConversationEditView(LoginRequiredMixin, generic.UpdateView):

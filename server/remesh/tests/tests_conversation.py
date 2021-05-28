@@ -184,26 +184,24 @@ class ConversationAddFormTests(TestCase):
     for label in labels:
       self.assertContains(response, label)
 
-  # def test_add_conversation_form_post_for_valid_data(self):
-  #   username, password = get_user_creds()
-  #   user = create_user(username, password)
-  #   team1 = create_team(name="foodies", users=[user])
-  #   login = self.client.login(username=username, password=password)
-  #   response = self.client.post(
-  #     reverse('remesh:conversation_add'),
-  #     data={
-  #       'moderator': ['1'],
-  #       'team': ['1'],
-  #       'title': 'Pancakes',
-  #       'date': "2020-05-24",
-  #       'duration': '60',
-  #       'max_num_of_participants': '40'
-  #     }
-  #   )
-  #   self.assertRedirects(response, reverse('remesh:team_index'))
-  #   self.assertEqual(response.status_code, 302)
-  #   c = Conversation.objects.all().count()
-  #   self.assertEqual(c, 1)
+  def test_add_conversation_form_post_for_valid_data(self):
+    username, password = get_user_creds()
+    user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
+    login = self.client.login(username=username, password=password)
+    response = self.client.post(
+      reverse('remesh:conversation_add', args=(team1.pk,)),
+      data={
+        'moderator': '1',
+        'title': 'Pancakes',
+        'start_date_time': "01/01/2020",
+        'duration': '60',
+        'max_num_of_participants': '40'
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:team_conversation_index', args=(team1.pk,)))
+    c = Conversation.objects.all().count()
+    self.assertEqual(c, 1)
 
 
 class ConversationEditFormTests(TestCase):
