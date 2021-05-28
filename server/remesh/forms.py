@@ -12,4 +12,4 @@ class TeamForm(forms.ModelForm):
 class ConversationForm(forms.ModelForm):
   class Meta:
     model = Conversation
-    fields = "__all__"
+    exclude = ["team"]

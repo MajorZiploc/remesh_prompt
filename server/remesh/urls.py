@@ -14,6 +14,6 @@ urlpatterns = [
     path('team/future-conversation/<int:team_pk>/', views.ConversationFutureView.as_view(), name='team_conversation_future'),
     path('team/active-conversation/<int:team_pk>/', views.ConversationActiveView.as_view(), name='team_conversation_active'),
     path('conversation/<int:pk>/', views.ConversationDetailView.as_view(), name='conversation_detail'),
-    path('conversation/add', views.ConversationAddView.as_view(), name='conversation_add'),
+    path('conversation/<int:team_pk>/add', views.ConversationAddView.as_view(), name='conversation_add'),
     path('conversation/edit/<int:pk>', views.ConversationEditView.as_view(), name='conversation_edit'),
 ]

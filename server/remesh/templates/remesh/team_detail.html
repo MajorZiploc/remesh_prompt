@@ -3,6 +3,7 @@
 {% block content %}
 <h1>{{ team.pk }}</h1>
 <p>{{ team.members }}</p>
+<a id='add-conversation' href="{% url 'remesh:conversation_add' team.pk %}">Add new conversation</a>
 <a id='goto-conversations' href="{% url 'remesh:team_conversation_index' team.pk %}">See conversations</a>
 <a id='goto-active-conversations' href="{% url 'remesh:team_conversation_index' team.pk %}">See active conversations</a>
 <a id='goto-past-conversations' href="{% url 'remesh:team_conversation_past' team.pk %}">See past conversations</a>

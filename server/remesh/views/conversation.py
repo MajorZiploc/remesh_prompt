@@ -84,7 +84,10 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
     return initial
 
   def form_valid(self, form):
-    form.save()
+    form = ConversationForm(self.request.POST)
+    conversation = form.save(commit=False)
+    conversation.team__pk = self.kwargs['team_id']
+    conversation.save()
     return super().form_valid(form)
 
 
