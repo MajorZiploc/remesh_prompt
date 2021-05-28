@@ -170,8 +170,9 @@ class ConversationAddFormTests(TestCase):
   def test_add_conversation_form_exists(self):
     username, password = get_user_creds()
     user = create_user(username, password)
+    team1 = create_team(name="foodies", users=[user])
     login = self.client.login(username=username, password=password)
-    response = self.client.get(reverse('remesh:conversation_add'))
+    response = self.client.get(reverse('remesh:conversation_add', args=(team1.pk,)))
     self.assertEqual(response.status_code, 200)
     labels = [
         'Title',
@@ -179,7 +180,6 @@ class ConversationAddFormTests(TestCase):
         'Duration',
         'Max num of participants',
         'Moderator',
-        'Team',
         'Submit']
     for label in labels:
       self.assertContains(response, label)
