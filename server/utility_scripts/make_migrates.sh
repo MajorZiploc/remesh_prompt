@@ -6,3 +6,5 @@ manage="$SCRIPTPATH/../manage.py"
 
 python "$manage" makemigrations
 
+python "$manage" makemigrations remesh
+

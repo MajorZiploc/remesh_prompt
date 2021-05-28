@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'remesh.apps.BodyCompConfig',
+    'remesh.apps.RemeshConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
