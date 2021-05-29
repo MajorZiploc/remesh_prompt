@@ -38,7 +38,7 @@ class ConversationActiveView(LoginRequiredMixin, generic.ListView):
 
 
 class ConversationPastView(LoginRequiredMixin, generic.ListView):
-  template_name = 'remesh/team_conversation_past.html'
+  template_name = 'remesh/team_conversation_index.html'
   context_object_name = 'conversation_list'
 
   def get_queryset(self, *args, **kwargs):
@@ -52,7 +52,7 @@ class ConversationPastView(LoginRequiredMixin, generic.ListView):
 
 
 class ConversationFutureView(LoginRequiredMixin, generic.ListView):
-  template_name = 'remesh/team_conversation_future.html'
+  template_name = 'remesh/team_conversation_index.html'
   context_object_name = 'conversation_list'
 
   def get_queryset(self, *args, **kwargs):
