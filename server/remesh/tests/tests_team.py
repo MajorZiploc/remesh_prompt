@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from remesh.models import Team
+from remesh.models import Team, Conversation
 from django.utils import timezone
 from django.contrib.messages import get_messages
 from .utils_for_tests import *
@@ -122,7 +122,11 @@ class TeamDeleteFormTests(TestCase):
     login = self.client.login(username=username, password=password)
     team1 = create_team(name="foodies", users=[user])
     team2 = create_team(name="shoe lovers", users=[user])
+    conversation1 = create_conversation(moderator=user, team=team1, title='Pancakes')
+    conversation2 = create_conversation(moderator=user, team=team2, title='zzz')
     response = self.client.post(reverse('remesh:team_delete', args=(team1.pk,)))
     self.assertEqual(response.status_code, 302)
     self.assertRedirects(response, reverse('remesh:team_index'))
     self.assertEqual(list(Team.objects.all()), [team2])
+    self.assertEqual(Conversation.objects.all().count(), 1)
+    self.assertEqual(Conversation.objects.get(pk=conversation2.pk).title, 'zzz')
