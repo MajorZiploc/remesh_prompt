@@ -60,7 +60,7 @@ class TeamEditView(LoginRequiredMixin, generic.UpdateView):
 
 class TeamDeleteView(LoginRequiredMixin, generic.DeleteView):
   model = Team
-  template_name = 'remesh/delete.html'
+  template_name = 'remesh/general_delete.html'
   success_url = reverse_lazy('remesh:team_index')
   context_object_name = 'object'
 
