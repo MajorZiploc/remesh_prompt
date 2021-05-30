@@ -11,7 +11,7 @@ class Conversation(models.Model):
     return self.title
 
   class Meta():
-    ordering = ['title']
+    ordering = ['start_date_time', 'title']
 
 
 class Message(models.Model):
@@ -23,7 +23,7 @@ class Message(models.Model):
     return self.text
 
   class Meta():
-    ordering = ['text']
+    ordering = ['date_time_sent', 'text']
 
 
 class Thought(models.Model):
@@ -35,4 +35,4 @@ class Thought(models.Model):
     return self.text
 
   class Meta():
-    ordering = ['text']
+    ordering = ['date_time_sent', 'text']
