@@ -1,15 +1,8 @@
 from django import forms
 
-from .models import Team, Conversation
-
-
-class TeamForm(forms.ModelForm):
-  class Meta:
-    model = Team
-    fields = "__all__"
+from .models import Conversation
 
 
 class ConversationForm(forms.ModelForm):
   class Meta:
     model = Conversation
-    exclude = ["team"]
