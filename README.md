@@ -13,7 +13,7 @@ https://github.com/MajorZiploc/remesh_prompt
 ## Requirements
 - Assumes global python is v3 for creation of the virtual environment
 - python 3.8.x
-- pip 20.x.x
+- pip 20.x.x or 21.x.x
 - python3-venv
 - bash --version GNU bash, version 5.x.xx
 
