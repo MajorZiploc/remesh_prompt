@@ -40,6 +40,20 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [message2, message3])
 
+  def test_empty_search_phrase_shows_all_messages_for_a_given_conversation(self):
+    conversation = create_conversation(title='Tacos')
+    conversation2 = create_conversation(title='Pancakes')
+    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    message2 = create_message(text='I love tacos so much!', conversation=conversation)
+    message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
+    message4 = create_message(text='Pancake life', conversation=conversation2)
+    search_phrase = ''
+    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "All Messages")
+    self.assertContains(response, "Add New Message")
+    self.assertQuerysetEqual(response.context['message_list'], [message2, message, message3])
+
 
 class MessageAddFormTests(TestCase):
   def test_add_message_form_exists(self):
