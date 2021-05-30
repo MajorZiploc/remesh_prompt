@@ -6,7 +6,7 @@
 <ul>
   {% for conversation in conversation_list %}
   <li>
-    <a>{{ conversation.title }}</a>
+    <a href="{% url 'remesh:message_index' conversation.pk %}">{{ conversation.title }}</a>
   </li>
   {% endfor %}
 </ul>
