@@ -1,2 +1,3 @@
 from .conversation import *
-from .team import *
+from .message import *
+from .thought import *

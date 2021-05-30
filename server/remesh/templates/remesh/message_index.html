@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if message_list %}
+<p>{{ title }}</p>
+<form action="{% url 'remesh:message_index' conversation_pk %}" method="get">
+  <input name="search_phrase" type="text" placeholder="Search...">
+</form>
+<ul>
+  {% for message in message_list %}
+  <li>
+    <a href="{% url 'remesh:thought_index' message.pk %}">{{ message.text }}</a> with date time sent: {{ message.date_time_sent }}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No messages are available.</p>
+{% endif %}
+<a id="add-message" href="{% url 'remesh:message_add' conversation_pk%}">Add New Message</a>
+{% endblock %}
+

@@ -1,31 +1,33 @@
-from remesh.models import Team, Conversation, User
-from datetime import timedelta
+from remesh.models import Conversation, Message, Thought
 from django.utils import timezone
 
 
-def create_user(username, password):
-  user = User.objects.create_user(username=username, password=password)
-  return user
-
-
-def get_user_creds():
-  return 'testuser', '12345'
-
-
-def create_team(name, users):
-  t = Team.objects.create(name=name)
-  t.members.set(users)
-  return t
-
-
-def create_conversation(moderator, team, title='Pancakes',
-                        start_date_time=timezone.now(), duration=timedelta(days=2),
-                        max_num_of_participants=50
+def create_conversation(title='Pancakes',
+                        start_date_time=timezone.now()
                         ):
   return Conversation.objects.create(
       title=title,
       start_date_time=start_date_time,
-      duration=duration,
-      max_num_of_participants=max_num_of_participants,
-      moderator=moderator,
-      team=team)
+  )
+
+
+def create_message(conversation,
+                   text='Hi there friends!',
+                   date_time_sent=timezone.now()
+                   ):
+  return Message.objects.create(
+      text=text,
+      date_time_sent=date_time_sent,
+      conversation=conversation
+  )
+
+
+def create_thought(message,
+                   text='I agree with telling friends hi',
+                   date_time_sent=timezone.now()
+                   ):
+  return Thought.objects.create(
+      text=text,
+      date_time_sent=date_time_sent,
+      message=message
+  )
