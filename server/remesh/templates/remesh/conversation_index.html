@@ -3,6 +3,9 @@
 {% block content %}
 {% if conversation_list %}
 <p>{{ title }}</p>
+<form action="{% url 'remesh:conversation_search' %}" method="get">
+  <input name="search_phrase" type="text" placeholder="Search...">
+</form>
 <ul>
   {% for conversation in conversation_list %}
   <li>
