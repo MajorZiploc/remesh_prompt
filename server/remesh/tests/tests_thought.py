@@ -29,7 +29,6 @@ class ThoughtIndexViewTests(TestCase):
     self.assertQuerysetEqual(response.context['thought_list'], [thought2, thought])
 
 
-
 class ThoughtAddFormTests(TestCase):
   def test_add_thought_form_exists(self):
     conversation = create_conversation(title='Tacos')
@@ -80,5 +79,7 @@ class ThoughtAddFormTests(TestCase):
     )
     self.assertRedirects(response, reverse('remesh:thought_index', args=(message.pk,)))
     response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))
-    self.assertQuerysetEqual(response.context['thought_list'], list(Thought.objects.filter(text='How could you not love tacos??')))
-
+    self.assertQuerysetEqual(
+        response.context['thought_list'], list(
+            Thought.objects.filter(
+                text='How could you not love tacos??')))

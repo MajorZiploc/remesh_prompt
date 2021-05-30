@@ -6,45 +6,45 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    initial = True
+  initial = True
 
-    dependencies = [
-    ]
+  dependencies = [
+  ]
 
-    operations = [
-        migrations.CreateModel(
-            name='Conversation',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=250)),
-                ('start_date_time', models.DateTimeField()),
-            ],
-            options={
-                'ordering': ['title'],
-            },
-        ),
-        migrations.CreateModel(
-            name='Message',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('date_time_sent', models.DateTimeField(auto_now_add=True)),
-                ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='remesh.conversation')),
-            ],
-            options={
-                'ordering': ['text'],
-            },
-        ),
-        migrations.CreateModel(
-            name='Thought',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.TextField()),
-                ('date_time_sent', models.DateTimeField(auto_now_add=True)),
-                ('message', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='remesh.message')),
-            ],
-            options={
-                'ordering': ['text'],
-            },
-        ),
-    ]
+  operations = [
+      migrations.CreateModel(
+          name='Conversation',
+          fields=[
+              ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+              ('title', models.CharField(max_length=250)),
+              ('start_date_time', models.DateTimeField()),
+          ],
+          options={
+              'ordering': ['title'],
+          },
+      ),
+      migrations.CreateModel(
+          name='Message',
+          fields=[
+              ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+              ('text', models.TextField()),
+              ('date_time_sent', models.DateTimeField(auto_now_add=True)),
+              ('conversation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='remesh.conversation')),
+          ],
+          options={
+              'ordering': ['text'],
+          },
+      ),
+      migrations.CreateModel(
+          name='Thought',
+          fields=[
+              ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+              ('text', models.TextField()),
+              ('date_time_sent', models.DateTimeField(auto_now_add=True)),
+              ('message', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='remesh.message')),
+          ],
+          options={
+              'ordering': ['text'],
+          },
+      ),
+  ]

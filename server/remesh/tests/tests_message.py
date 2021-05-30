@@ -27,7 +27,6 @@ class MessageIndexViewTests(TestCase):
     self.assertQuerysetEqual(response.context['message_list'], [message2, message])
 
 
-
 class MessageAddFormTests(TestCase):
   def test_add_message_form_exists(self):
     conversation = create_conversation(title='Tacos')
@@ -76,4 +75,3 @@ class MessageAddFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertQuerysetEqual(response.context['message_list'], list(Message.objects.filter(text='I love tacos!')))
-

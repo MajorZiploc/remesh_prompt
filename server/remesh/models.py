@@ -18,7 +18,7 @@ class Message(models.Model):
   text = models.TextField()
   date_time_sent = models.DateTimeField(auto_now=False, auto_now_add=False)
   conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-  
+
   def __str__(self):
     return self.text
 

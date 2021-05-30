@@ -27,7 +27,6 @@ class ConversationIndexViewTests(TestCase):
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation, conversation2])
 
 
-
 class ConversationAddFormTests(TestCase):
   def test_add_conversation_form_exists(self):
     response = self.client.get(reverse('remesh:conversation_add'))
@@ -50,4 +49,3 @@ class ConversationAddFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:conversation_index'))
     c = Conversation.objects.all().count()
     self.assertEqual(c, 1)
-

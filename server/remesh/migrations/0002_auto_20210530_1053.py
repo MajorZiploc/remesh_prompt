@@ -5,19 +5,19 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('remesh', '0001_initial'),
-    ]
+  dependencies = [
+      ('remesh', '0001_initial'),
+  ]
 
-    operations = [
-        migrations.AlterField(
-            model_name='message',
-            name='date_time_sent',
-            field=models.DateTimeField(),
-        ),
-        migrations.AlterField(
-            model_name='thought',
-            name='date_time_sent',
-            field=models.DateTimeField(),
-        ),
-    ]
+  operations = [
+      migrations.AlterField(
+          model_name='message',
+          name='date_time_sent',
+          field=models.DateTimeField(),
+      ),
+      migrations.AlterField(
+          model_name='thought',
+          name='date_time_sent',
+          field=models.DateTimeField(),
+      ),
+  ]
