@@ -4,13 +4,9 @@ from django.urls import reverse, reverse_lazy
 from remesh.models import Conversation
 from django.utils import timezone
 from remesh.forms import ConversationForm
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-User = get_user_model()
 
 
-class ConversationIndexView(LoginRequiredMixin, generic.ListView):
+class ConversationIndexView(generic.ListView):
   template_name = 'remesh/conversation_index.html'
   context_object_name = 'conversation_list'
 
@@ -23,12 +19,12 @@ class ConversationIndexView(LoginRequiredMixin, generic.ListView):
     return context
 
 
-class ConversationDetailView(LoginRequiredMixin, generic.DetailView):
+class ConversationDetailView(generic.DetailView):
   model = Conversation
   template_name = 'remesh/conversation_detail.html'
 
 
-class ConversationAddView(LoginRequiredMixin, generic.FormView):
+class ConversationAddView(generic.FormView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_add.html'
 
@@ -44,7 +40,7 @@ class ConversationAddView(LoginRequiredMixin, generic.FormView):
     return super().form_valid(form)
 
 
-class ConversationEditView(LoginRequiredMixin, generic.UpdateView):
+class ConversationEditView(generic.UpdateView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_edit.html'
 
