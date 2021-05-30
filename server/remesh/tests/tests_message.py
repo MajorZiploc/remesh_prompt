@@ -39,6 +39,22 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "No thank you to the tacos")
     self.assertQuerysetEqual(response.context['message_list'], [message, message2])
 
+  def test_search_phase_with_special_chars(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank -{!z~}you 4 the taco Community', conversation=conversation)
+    message2 = create_message(text='I love tacos so much!', conversation=conversation)
+    message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
+    search_phrase = '-{!z~}'
+    response = self.client.get(
+        reverse(
+            'remesh:message_index', args=(
+                conversation.pk,)), {
+            'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Messages that contain {search_phrase}")
+    self.assertContains(response, "Add New Message")
+    self.assertQuerysetEqual(response.context['message_list'], [message])
+
   def test_search_filters_to_things_that_contain_words_with_space(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you 4 the taco Community', conversation=conversation)
@@ -132,9 +148,10 @@ class MessageAddFormTests(TestCase):
     c = Message.objects.all().count()
     self.assertEqual(c, 1)
 
-  def test_added_messages_show_under_right_conversation(self):
+  def test_added_messages_show_under_right_conversation_even_if_conversation_names_are_the_same(self):
     conversation = create_conversation(title='Tacos')
     conversation1 = create_conversation(title='Not Tacos')
+    conversation2 = create_conversation(title='Tacos')
     response1 = self.client.post(
       reverse('remesh:message_add', args=(conversation1.pk,)),
       data={
@@ -154,3 +171,5 @@ class MessageAddFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertQuerysetEqual(response.context['message_list'], list(Message.objects.filter(text='I love tacos!')))
+    response = self.client.get(reverse('remesh:message_index', args=(conversation2.pk,)))
+    self.assertQuerysetEqual(response.context['message_list'], [])

@@ -1,7 +1,7 @@
 # Remesh Prompt
 
 ## Overview
-This is a django project that aims to recreate a simple version of remesh.
+This is a django mvt project with sqlite that aims to recreate a simple version of remesh.
 
 This is for interview purposes at remesh.ai.
 
@@ -26,7 +26,7 @@ https://github.com/MajorZiploc/remesh_prompt
 - python 3.8.5
 - pip 20.0.2
 
-## Setup the server - Uses Django 'python manage.py <command>' flow - Refer to the Troubleshooting section at the bottom of this readme if you run into problems
+## Setup the project - Uses Django 'python manage.py <command>' flow - Refer to the Troubleshooting section at the bottom of this README if you run into problems
 
 ### Go into the server folder. All server commands assume you are in that directory.
 
@@ -36,10 +36,10 @@ https://github.com/MajorZiploc/remesh_prompt
 NOTE: all \*.sh files will work regardless of what directory you call them from
 
 ### first time up front setup - creation of python virtual environment
-> mkdir -p ~/.virtualenvs && python -m venv ~/.virtualenvs/body\_comp\_server
+> mkdir -p ~/.virtualenvs && python -m venv ~/.virtualenvs/remesh\_prompt\_server
 
 ### launch virtual environment
-> source ~/.virtualenvs/body\_comp\_server/bin/activate
+> source ~/.virtualenvs/remesh\_prompt\_server/bin/activate
 
 ### install dependencies
 > pip install -e .

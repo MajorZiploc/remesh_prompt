@@ -69,10 +69,11 @@ class ThoughtAddFormTests(TestCase):
     c = Thought.objects.all().count()
     self.assertEqual(c, 1)
 
-  def test_added_thoughts_show_under_right_message(self):
+  def test_added_thoughts_show_under_right_message_even_if_conversation_names_are_the_same(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     message1 = create_message(text='I love tacos!?', conversation=conversation)
+    message2 = create_message(text='No thank you to the tacos', conversation=conversation)
     response1 = self.client.post(
       reverse('remesh:thought_add', args=(message1.pk,)),
       data={
@@ -95,3 +96,6 @@ class ThoughtAddFormTests(TestCase):
         response.context['thought_list'], list(
             Thought.objects.filter(
                 text='How could you not love tacos??')))
+    response = self.client.get(reverse('remesh:thought_index', args=(message2.pk,)))
+    self.assertQuerysetEqual(
+        response.context['thought_list'], [])
