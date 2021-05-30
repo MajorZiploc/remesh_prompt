@@ -18,7 +18,11 @@ class ConversationIndexView(generic.ListView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['title'] = 'Conversations'
+    search_phrase = self.request.GET.get('search_phrase', None)
+    if (search_phrase):
+      context['title'] = f'Conversations that contain {search_phrase}'
+    else:
+      context['title'] = 'All Conversations'
     return context
 
 

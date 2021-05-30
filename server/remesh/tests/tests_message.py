@@ -22,7 +22,7 @@ class MessageIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No messages are available.")
-    self.assertContains(response, "Messages")
+    self.assertContains(response, "All Messages")
     self.assertContains(response, "Add New Message")
     self.assertContains(response, "I love tacos so much!")
     self.assertContains(response, "No thank you to the tacos")
@@ -33,8 +33,10 @@ class MessageIndexViewTests(TestCase):
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     message2 = create_message(text='I love tacos so much!', conversation=conversation)
     message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
-    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': 'love'})
+    search_phrase = 'love'
+    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': search_phrase})
     self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Messages that contain {search_phrase}")
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [message2, message3])
 

@@ -18,7 +18,11 @@ class MessageIndexView(generic.ListView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['title'] = 'Messages'
+    search_phrase = self.request.GET.get('search_phrase', None)
+    if (search_phrase):
+      context['title'] = f'Messages that contain {search_phrase}'
+    else:
+      context['title'] = 'All Messages'
     context['conversation_pk'] = self.kwargs['conversation_pk']
     return context
 

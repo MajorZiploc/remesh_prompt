@@ -22,7 +22,7 @@ class ConversationIndexViewTests(TestCase):
     response = self.client.get(reverse('remesh:conversation_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No conversations are available.")
-    self.assertContains(response, "Conversations")
+    self.assertContains(response, "All Conversations")
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation, conversation2])
 
@@ -30,8 +30,10 @@ class ConversationIndexViewTests(TestCase):
     conversation = create_conversation(title='Pancakes')
     conversation2 = create_conversation(title='Tacos')
     conversation3 = create_conversation(title='How many pans does it take to create 20 pancakes?')
-    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': 'pan'})
+    search_phrase = 'pan'
+    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': search_phrase})
     self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Conversations that contain {search_phrase}")
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation3, conversation])
 
