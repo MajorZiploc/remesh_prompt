@@ -12,6 +12,8 @@ class ThoughtIndexViewTests(TestCase):
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))
     self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "All Thoughts")
+    self.assertNotContains(response, "Thoughts that contain")
     self.assertContains(response, "No thoughts are available.")
     self.assertContains(response, "Add New Thought")
     self.assertQuerysetEqual(response.context['thought_list'], [])

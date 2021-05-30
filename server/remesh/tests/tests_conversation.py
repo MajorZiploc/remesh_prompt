@@ -12,6 +12,8 @@ class ConversationIndexViewTests(TestCase):
   def test_no_conversations(self):
     response = self.client.get(reverse('remesh:conversation_index'))
     self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "All Conversations")
+    self.assertNotContains(response, "Conversations that contain")
     self.assertContains(response, "No conversations are available.")
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [])

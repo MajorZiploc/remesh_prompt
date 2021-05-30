@@ -11,6 +11,8 @@ class MessageIndexViewTests(TestCase):
     conversation = create_conversation(title='Tacos')
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertEqual(response.status_code, 200)
+    self.assertNotContains(response, "All Messages")
+    self.assertNotContains(response, "Messages that contain")
     self.assertContains(response, "No messages are available.")
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [])
