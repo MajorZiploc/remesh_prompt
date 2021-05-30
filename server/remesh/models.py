@@ -14,6 +14,7 @@ class Conversation(models.Model):
 class Message(models.Model):
   text = models.TextField()
   date_time_sent = models.DateTimeField(auto_now_add=True)
+  conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
 
   class Meta():
     ordering = ['text']
