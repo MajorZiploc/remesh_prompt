@@ -8,6 +8,7 @@ This is for interview purposes at remesh.ai.
 ## All scripts mentioned in this readme need to be copied from the readme rendered. Not directly from the file.
 
 ## Requirements
+- Assumes global python is v3 for creation of the virtual environment
 - python 3.8.x
 - pip 20.x.x
 - python3-venv
@@ -18,7 +19,7 @@ This is for interview purposes at remesh.ai.
 - python extension for vscode - ms-python.python
 - pylance extension for vscode - ms-python.vscode-pylance
 - bash --version GNU bash, version 5.0.17(1)-release (x86\_64-pc-linux-gnu)
-- wsl1 ubuntu 20.04
+- wsl ubuntu 20.04 windows 10
 - python 3.8.5
 - pip 20.0.2
 
