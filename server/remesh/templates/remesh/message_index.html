@@ -6,7 +6,7 @@
 <ul>
   {% for message in message_list %}
   <li>
-    <a href="{% url 'remesh:thought_index' message.pk %}">{{ message.title }}</a>
+    <a href="{% url 'remesh:thought_index' message.pk %}">{{ message.text }}</a>
   </li>
   {% endfor %}
 </ul>

@@ -15,7 +15,7 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [])
 
-  def test_message_is_in_index(self):
+  def test_message_is_in_index_with_message_text(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     message2 = create_message(text='I love tacos so much!', conversation=conversation)
@@ -24,6 +24,8 @@ class MessageIndexViewTests(TestCase):
     self.assertNotContains(response, "No messages are available.")
     self.assertContains(response, "Messages")
     self.assertContains(response, "Add New Message")
+    self.assertContains(response, "I love tacos so much!")
+    self.assertContains(response, "No thank you to the tacos")
     self.assertQuerysetEqual(response.context['message_list'], [message2, message])
 
 

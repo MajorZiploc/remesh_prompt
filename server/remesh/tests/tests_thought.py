@@ -16,7 +16,7 @@ class ThoughtIndexViewTests(TestCase):
     self.assertContains(response, "Add New Thought")
     self.assertQuerysetEqual(response.context['thought_list'], [])
 
-  def test_thought_is_in_index(self):
+  def test_thought_is_in_index_with_thought_text(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     thought = create_thought(text='You dont want tacos!?', message=message)
@@ -26,6 +26,8 @@ class ThoughtIndexViewTests(TestCase):
     self.assertNotContains(response, "No thoughts are available.")
     self.assertContains(response, "Thoughts")
     self.assertContains(response, "Add New Thought")
+    self.assertContains(response, "You dont want tacos!?")
+    self.assertContains(response, "I love tacos so much!")
     self.assertQuerysetEqual(response.context['thought_list'], [thought2, thought])
 
 
