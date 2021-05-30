@@ -7,7 +7,7 @@ from datetime import timedelta
 
 
 class ThoughtIndexViewTests(TestCase):
-  def test_no_thoughts(self):
+  def test_no_thoughts_empty_index(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))

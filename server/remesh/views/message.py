@@ -1,8 +1,6 @@
-from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from remesh.models import Conversation, Message
-from django.utils import timezone
 from remesh.forms import MessageForm
 
 

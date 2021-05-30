@@ -1,5 +1,4 @@
 from remesh.models import Conversation, Message, Thought
-from datetime import timedelta
 from django.utils import timezone
 
 

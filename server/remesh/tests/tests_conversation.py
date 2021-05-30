@@ -1,15 +1,13 @@
 from django.test import TestCase
 from django.urls import reverse
-from remesh.views import ConversationIndexView
 from remesh.models import Conversation
-from django.contrib.messages import get_messages
 from .utils_for_tests import *
 from django.utils import timezone
 from datetime import timedelta
 
 
 class ConversationIndexViewTests(TestCase):
-  def test_no_conversations(self):
+  def test_no_conversations_empty_index(self):
     response = self.client.get(reverse('remesh:conversation_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "All Conversations")
@@ -88,7 +86,7 @@ class ConversationAddFormTests(TestCase):
     for label in labels:
       self.assertContains(response, label)
 
-  def test_add_conversation_form_post_for_valid_data(self):
+  def test_add_conversation_form_post_for_valid_data_and_shows_on_index_page(self):
     response = self.client.post(
       reverse('remesh:conversation_add'),
       data={

@@ -7,7 +7,7 @@ from datetime import timedelta
 
 
 class MessageIndexViewTests(TestCase):
-  def test_no_messages(self):
+  def test_no_messages_empty_index(self):
     conversation = create_conversation(title='Tacos')
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertEqual(response.status_code, 200)
@@ -70,7 +70,6 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, f"Messages that contain {search_phrase}")
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [message])
-
 
   def test_search_filters_to_things_that_contain_love(self):
     conversation = create_conversation(title='Tacos')

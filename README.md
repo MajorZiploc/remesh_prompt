@@ -66,6 +66,13 @@ NOTE: all \*.sh files will work regardless of what directory you call them from
 - This will redirect you to a user page to edit user permissions and such
 
 ## Troubleshooting
+
+- Time zone setting is TIME_ZONE = 'America/Chicago'. If you are in a different time zone, you may have to change this in server/mysite/settings.py to your timezone
+
+Here is a link to valid time zone settings:
+
+https://gist.github.com/heyalexej/8bf688fd67d7199be4a1682b3eec7568
+
 This app was developed on a Windows 10 machine. I have checked many times to ensure that you dont experience issues on Linux. But there is always a change you will encounter one of the following.
 
 Even with the use of a linux subsystem to develop, there can be some issues when running on a linux machine.
