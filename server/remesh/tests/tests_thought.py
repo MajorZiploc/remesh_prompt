@@ -30,52 +30,55 @@ class ThoughtIndexViewTests(TestCase):
 
 
 
-# class ThoughtAddFormTests(TestCase):
-#   def test_add_thought_form_exists(self):
-#     message = create_message(title='Tacos')
-#     response = self.client.get(reverse('remesh:thought_add', args=(message.pk,)))
-#     self.assertEqual(response.status_code, 200)
-#     labels = [
-#         'Text',
-#         'Date time sent',
-#         'Submit']
-#     for label in labels:
-#       self.assertContains(response, label)
+class ThoughtAddFormTests(TestCase):
+  def test_add_thought_form_exists(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    response = self.client.get(reverse('remesh:thought_add', args=(message.pk,)))
+    self.assertEqual(response.status_code, 200)
+    labels = [
+        'Text',
+        'Date time sent',
+        'Submit']
+    for label in labels:
+      self.assertContains(response, label)
 
-#   def test_add_thought_form_post_for_valid_data(self):
-#     message = create_message(title='Tacos')
-#     response = self.client.post(
-#       reverse('remesh:thought_add', args=(message.pk,)),
-#       data={
-#         'text': 'I love tacos!',
-#         'date_time_sent': "01/01/2020",
-#         'message': message.pk
-#       }
-#     )
-#     self.assertRedirects(response, reverse('remesh:thought_index', args=(message.pk,)))
-#     c = Thought.objects.all().count()
-#     self.assertEqual(c, 1)
+  def test_add_thought_form_post_for_valid_data(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    response = self.client.post(
+      reverse('remesh:thought_add', args=(message.pk,)),
+      data={
+        'text': 'I love tacos!',
+        'date_time_sent': "01/01/2020",
+        'message': message.pk
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:thought_index', args=(message.pk,)))
+    c = Thought.objects.all().count()
+    self.assertEqual(c, 1)
 
-#   def test_added_thoughts_show_under_right_message(self):
-#     message = create_message(title='Tacos')
-#     message1 = create_message(title='Not Tacos')
-#     response1 = self.client.post(
-#       reverse('remesh:thought_add', args=(message1.pk,)),
-#       data={
-#         'text': 'not a taco chat',
-#         'date_time_sent': "01/01/2020",
-#         'message': message.pk
-#       }
-#     )
-#     response = self.client.post(
-#       reverse('remesh:thought_add', args=(message.pk,)),
-#       data={
-#         'text': 'I love tacos!',
-#         'date_time_sent': "01/01/2020",
-#         'message': message.pk
-#       }
-#     )
-#     self.assertRedirects(response, reverse('remesh:thought_index', args=(message.pk,)))
-#     response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))
-#     self.assertQuerysetEqual(response.context['thought_list'], list(Thought.objects.filter(text='I love tacos!')))
+  def test_added_thoughts_show_under_right_message(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    message1 = create_message(text='I love tacos!?', conversation=conversation)
+    response1 = self.client.post(
+      reverse('remesh:thought_add', args=(message1.pk,)),
+      data={
+        'text': 'I love them too!',
+        'date_time_sent': "01/01/2020",
+        'message': message.pk
+      }
+    )
+    response = self.client.post(
+      reverse('remesh:thought_add', args=(message.pk,)),
+      data={
+        'text': 'How could you not love tacos??',
+        'date_time_sent': "01/01/2020",
+        'message': message.pk
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:thought_index', args=(message.pk,)))
+    response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))
+    self.assertQuerysetEqual(response.context['thought_list'], list(Thought.objects.filter(text='How could you not love tacos??')))
 
