@@ -13,7 +13,7 @@ class Conversation(models.Model):
 
 class Message(models.Model):
   text = models.TextField()
-  date_time_sent = models.DateTimeField(auto_now=True, auto_now_add=True)
+  date_time_sent = models.DateTimeField(auto_now_add=True)
 
   class Meta():
     ordering = ['text']
@@ -21,7 +21,7 @@ class Message(models.Model):
 
 class Thought(models.Model):
   text = models.TextField()
-  date_time_sent = models.DateTimeField(auto_now=True, auto_now_add=True)
+  date_time_sent = models.DateTimeField(auto_now_add=True)
   message = models.ForeignKey(Message, on_delete=models.CASCADE)
 
   class Meta():
