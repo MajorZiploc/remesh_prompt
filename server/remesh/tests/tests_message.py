@@ -54,3 +54,26 @@ class MessageAddFormTests(TestCase):
     c = Message.objects.all().count()
     self.assertEqual(c, 1)
 
+  def test_added_messages_show_under_right_conversation(self):
+    conversation = create_conversation(title='Tacos')
+    conversation1 = create_conversation(title='Not Tacos')
+    response1 = self.client.post(
+      reverse('remesh:message_add', args=(conversation1.pk,)),
+      data={
+        'text': 'not a taco chat',
+        'date_time_sent': "01/01/2020",
+        'conversation': conversation.pk
+      }
+    )
+    response = self.client.post(
+      reverse('remesh:message_add', args=(conversation.pk,)),
+      data={
+        'text': 'I love tacos!',
+        'date_time_sent': "01/01/2020",
+        'conversation': conversation.pk
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
+    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
+    self.assertQuerysetEqual(response.context['message_list'], list(Message.objects.filter(text='I love tacos!')))
+
