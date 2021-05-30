@@ -99,3 +99,5 @@ class ConversationAddFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:conversation_index'))
     c = Conversation.objects.all().count()
     self.assertEqual(c, 1)
+    response = self.client.get(reverse('remesh:conversation_index'))
+    self.assertQuerysetEqual(response.context['conversation_list'], list(Conversation.objects.filter(title='Pancakes')))
