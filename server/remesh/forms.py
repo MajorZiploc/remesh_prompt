@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Conversation
+from .models import Conversation, Message, Thought
 
 
 class ConversationForm(forms.ModelForm):
@@ -8,3 +8,14 @@ class ConversationForm(forms.ModelForm):
     model = Conversation
     fields = "__all__"
 
+
+class ThoughtForm(forms.ModelForm):
+  class Meta:
+    model = Thought
+    fields = "__all__"
+
+
+class MessageForm(forms.ModelForm):
+  class Meta:
+    model = Message
+    fields = "__all__"
