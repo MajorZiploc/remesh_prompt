@@ -6,7 +6,7 @@
 <ul>
   {% for thought in thought_list %}
   <li>
-    <a>{{ thought.text }}</a>
+    {{ thought.text }} with date time sent: {{ thought.date_time_sent }}
   </li>
   {% endfor %}
 </ul>
