@@ -23,7 +23,7 @@ This is for interview purposes at remesh.ai.
 - python 3.8.5
 - pip 20.0.2
 
-## Setup the server - Uses Django 'python manage.py <command>' flow
+## Setup the server - Uses Django 'python manage.py <command>' flow - Refer to the Troubleshooting section at the bottom of this readme if you run into problems
 
 ### Go into the server folder. All server commands assume you are in that directory.
 
