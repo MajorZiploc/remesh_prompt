@@ -28,6 +28,16 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "No thank you to the tacos")
     self.assertQuerysetEqual(response.context['message_list'], [message2, message])
 
+  def test_search_filters_to_things_that_contain_love(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    message2 = create_message(text='I love tacos so much!', conversation=conversation)
+    message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
+    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': 'love'})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "Add New Message")
+    self.assertQuerysetEqual(response.context['message_list'], [message2, message3])
+
 
 class MessageAddFormTests(TestCase):
   def test_add_message_form_exists(self):
