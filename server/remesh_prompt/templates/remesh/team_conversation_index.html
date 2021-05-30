@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if conversation_list %}
+<p>{{ title }}</p>
+<ul>
+  {% for conversation in conversation_list %}
+  <li>
+    <a href="{% url 'remesh:conversation_detail' conversation.pk %}">{{ conversation.title }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No conversations are available.</p>
+{% endif %}
+{% endblock %}
+

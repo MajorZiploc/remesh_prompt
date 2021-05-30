@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ conversation.pk }}</h1>
+<p>{{ conversation.members }}</p>
+<a id='edit-conversation' href="{% url 'remesh:conversation_edit' conversation.pk %}">Edit this conversation</a>
+
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+{% endblock %}
+
