@@ -28,26 +28,26 @@ class ConversationIndexViewTests(TestCase):
 
 
 
-# class ConversationAddFormTests(TestCase):
-#   def test_add_conversation_form_exists(self):
-#     response = self.client.get(reverse('remesh:conversation_add'))
-#     self.assertEqual(response.status_code, 200)
-#     labels = [
-#         'Title',
-#         'Start date time',
-#         'Submit']
-#     for label in labels:
-#       self.assertContains(response, label)
+class ConversationAddFormTests(TestCase):
+  def test_add_conversation_form_exists(self):
+    response = self.client.get(reverse('remesh:conversation_add'))
+    self.assertEqual(response.status_code, 200)
+    labels = [
+        'Title',
+        'Start date time',
+        'Submit']
+    for label in labels:
+      self.assertContains(response, label)
 
-#   def test_add_conversation_form_post_for_valid_data(self):
-#     response = self.client.post(
-#       reverse('remesh:conversation_add'),
-#       data={
-#         'title': 'Pancakes',
-#         'start_date_time': "01/01/2020",
-#       }
-#     )
-#     self.assertRedirects(response, reverse('remesh:conversation_index'))
-#     c = Conversation.objects.all().count()
-#     self.assertEqual(c, 1)
+  def test_add_conversation_form_post_for_valid_data(self):
+    response = self.client.post(
+      reverse('remesh:conversation_add'),
+      data={
+        'title': 'Pancakes',
+        'start_date_time': "01/01/2020",
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:conversation_index'))
+    c = Conversation.objects.all().count()
+    self.assertEqual(c, 1)
 
