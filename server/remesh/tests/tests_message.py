@@ -148,9 +148,10 @@ class MessageAddFormTests(TestCase):
     c = Message.objects.all().count()
     self.assertEqual(c, 1)
 
-  def test_added_messages_show_under_right_conversation(self):
+  def test_added_messages_show_under_right_conversation_even_if_conversation_names_are_the_same(self):
     conversation = create_conversation(title='Tacos')
     conversation1 = create_conversation(title='Not Tacos')
+    conversation2 = create_conversation(title='Tacos')
     response1 = self.client.post(
       reverse('remesh:message_add', args=(conversation1.pk,)),
       data={
@@ -170,3 +171,5 @@ class MessageAddFormTests(TestCase):
     self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
     self.assertQuerysetEqual(response.context['message_list'], list(Message.objects.filter(text='I love tacos!')))
+    response = self.client.get(reverse('remesh:message_index', args=(conversation2.pk,)))
+    self.assertQuerysetEqual(response.context['message_list'], [])
