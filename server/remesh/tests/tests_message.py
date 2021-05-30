@@ -15,10 +15,10 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "Add New Message")
     self.assertQuerysetEqual(response.context['message_list'], [])
 
-  def test_message_is_in_index_with_message_text_for_a_given_conversation(self):
+  def test_message_is_in_index_with_message_text_for_a_given_conversation_in_order(self):
     conversation = create_conversation(title='Party Tacos')
     conversation2 = create_conversation(title='Pancakes')
-    message = create_message(text='No thank you to the tacos', conversation=conversation)
+    message = create_message(text='No thank you to the tacos', conversation=conversation, date_time_sent=(timezone.now() - timedelta(days=1)))
     message2 = create_message(text='I love tacos so much!', conversation=conversation)
     message3 = create_message(text='I love pancakes so much!', conversation=conversation2)
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
@@ -29,7 +29,7 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "Add New Message")
     self.assertContains(response, "I love tacos so much!")
     self.assertContains(response, "No thank you to the tacos")
-    self.assertQuerysetEqual(response.context['message_list'], [message2, message])
+    self.assertQuerysetEqual(response.context['message_list'], [message, message2])
 
   def test_search_filters_to_things_that_contain_love(self):
     conversation = create_conversation(title='Tacos')

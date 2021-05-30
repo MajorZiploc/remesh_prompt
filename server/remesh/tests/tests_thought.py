@@ -20,7 +20,7 @@ class ThoughtIndexViewTests(TestCase):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you to the tacos', conversation=conversation)
     message1 = create_message(text='Tacos are firaaaa!', conversation=conversation)
-    thought = create_thought(text='You dont want tacos!?', message=message)
+    thought = create_thought(text='You dont want tacos!?', message=message,  date_time_sent=(timezone.now() - timedelta(days=1)))
     thought2 = create_thought(text='I love tacos so much!', message=message)
     response = self.client.get(reverse('remesh:thought_index', args=(message.pk,)))
     self.assertEqual(response.status_code, 200)
@@ -30,7 +30,7 @@ class ThoughtIndexViewTests(TestCase):
     self.assertContains(response, "Add New Thought")
     self.assertContains(response, "You dont want tacos!?")
     self.assertContains(response, "I love tacos so much!")
-    self.assertQuerysetEqual(response.context['thought_list'], [thought2, thought])
+    self.assertQuerysetEqual(response.context['thought_list'], [thought,thought2])
 
 
 class ThoughtAddFormTests(TestCase):

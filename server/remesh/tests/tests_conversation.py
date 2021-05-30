@@ -16,15 +16,16 @@ class ConversationIndexViewTests(TestCase):
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [])
 
-  def test_conversation_is_in_index(self):
-    conversation = create_conversation()
-    conversation2 = create_conversation(title='Tacos')
+  def test_conversations_are_in_index_with_proper_order(self):
+    conversation = create_conversation(title='Pancakes', start_date_time=(timezone.now() - timedelta(days=1)))
+    conversation2 = create_conversation(title='Tacos', start_date_time=(timezone.now() - timedelta(days=0)))
+    conversation3 = create_conversation(title='ZTacos', start_date_time=(timezone.now() - timedelta(days=100)))
     response = self.client.get(reverse('remesh:conversation_index'))
     self.assertEqual(response.status_code, 200)
     self.assertNotContains(response, "No conversations are available.")
     self.assertContains(response, "All Conversations")
     self.assertContains(response, "Add New Conversation")
-    self.assertQuerysetEqual(response.context['conversation_list'], [conversation, conversation2])
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation3, conversation, conversation2])
 
   def test_search_filters_to_things_that_contain_pan(self):
     conversation = create_conversation(title='Pancakes')
