@@ -18,7 +18,13 @@ class MessageIndexViewTests(TestCase):
   def test_message_is_in_index_with_message_text_for_a_given_conversation_in_order(self):
     conversation = create_conversation(title='Party Tacos')
     conversation2 = create_conversation(title='Pancakes')
-    message = create_message(text='No thank you to the tacos', conversation=conversation, date_time_sent=(timezone.now() - timedelta(days=1)))
+    message = create_message(
+        text='No thank you to the tacos',
+        conversation=conversation,
+        date_time_sent=(
+            timezone.now() -
+            timedelta(
+                days=1)))
     message2 = create_message(text='I love tacos so much!', conversation=conversation)
     message3 = create_message(text='I love pancakes so much!', conversation=conversation2)
     response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)))
@@ -37,7 +43,11 @@ class MessageIndexViewTests(TestCase):
     message2 = create_message(text='I love tacos so much!', conversation=conversation)
     message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
     search_phrase = 'love'
-    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': search_phrase})
+    response = self.client.get(
+        reverse(
+            'remesh:message_index', args=(
+                conversation.pk,)), {
+            'search_phrase': search_phrase})
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, f"Messages that contain {search_phrase}")
     self.assertContains(response, "Add New Message")
@@ -51,7 +61,11 @@ class MessageIndexViewTests(TestCase):
     message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
     message4 = create_message(text='Pancake life', conversation=conversation2)
     search_phrase = ''
-    response = self.client.get(reverse('remesh:message_index', args=(conversation.pk,)), {'search_phrase': search_phrase})
+    response = self.client.get(
+        reverse(
+            'remesh:message_index', args=(
+                conversation.pk,)), {
+            'search_phrase': search_phrase})
     self.assertEqual(response.status_code, 200)
     self.assertContains(response, "All Messages")
     self.assertContains(response, "Add New Message")
