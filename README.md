@@ -36,10 +36,10 @@ https://github.com/MajorZiploc/remesh_prompt
 NOTE: all \*.sh files will work regardless of what directory you call them from
 
 ### first time up front setup - creation of python virtual environment
-> mkdir -p ~/.virtualenvs && python -m venv ~/.virtualenvs/body\_comp\_server
+> mkdir -p ~/.virtualenvs && python -m venv ~/.virtualenvs/remesh\_prompt\_server
 
 ### launch virtual environment
-> source ~/.virtualenvs/body\_comp\_server/bin/activate
+> source ~/.virtualenvs/remesh\_prompt\_server/bin/activate
 
 ### install dependencies
 > pip install -e .
