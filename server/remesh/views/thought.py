@@ -15,8 +15,10 @@ class ThoughtIndexView(generic.ListView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['title'] = 'Thoughts'
     context['message_pk'] = self.kwargs['message_pk']
+    message = Message.objects.get(pk=self.kwargs['message_pk'])
+    context['message'] = message
+    context['title'] = f'Thoughts on the message: "{message.text}"'
     return context
 
 
