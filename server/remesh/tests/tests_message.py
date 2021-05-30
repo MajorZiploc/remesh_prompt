@@ -28,28 +28,29 @@ class MessageIndexViewTests(TestCase):
 
 
 
-# class MessageAddFormTests(TestCase):
-#   def test_add_message_form_exists(self):
-#     conversation = create_conversation(title='Tacos')
-#     response = self.client.get(reverse('remesh:message_add', args=(conversation.pk,)))
-#     self.assertEqual(response.status_code, 200)
-#     labels = [
-#         'Title',
-#         'Date time sent',
-#         'Submit']
-#     for label in labels:
-#       self.assertContains(response, label)
+class MessageAddFormTests(TestCase):
+  def test_add_message_form_exists(self):
+    conversation = create_conversation(title='Tacos')
+    response = self.client.get(reverse('remesh:message_add', args=(conversation.pk,)))
+    self.assertEqual(response.status_code, 200)
+    labels = [
+        'Text',
+        'Date time sent',
+        'Submit']
+    for label in labels:
+      self.assertContains(response, label)
 
-  # def test_add_message_form_post_for_valid_data(self):
-  #   conversation = create_conversation(title='Tacos')
-  #   response = self.client.post(
-  #     reverse('remesh:message_add', args=(conversation.pk,)),
-  #     data={
-  #       'title': 'Pancakes',
-  #       'date_time_sent': "01/01/2020",
-  #     }
-  #   )
-  #   self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
-  #   c = Message.objects.all().count()
-  #   self.assertEqual(c, 1)
+  def test_add_message_form_post_for_valid_data(self):
+    conversation = create_conversation(title='Tacos')
+    response = self.client.post(
+      reverse('remesh:message_add', args=(conversation.pk,)),
+      data={
+        'text': 'I love tacos!',
+        'date_time_sent': "01/01/2020",
+        'conversation': conversation.pk
+      }
+    )
+    self.assertRedirects(response, reverse('remesh:message_index', args=(conversation.pk,)))
+    c = Message.objects.all().count()
+    self.assertEqual(c, 1)
 
