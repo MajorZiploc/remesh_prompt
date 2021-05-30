@@ -5,7 +5,10 @@ This is a django project that aims to recreate a simple version of remesh.
 
 This is for interview purposes at remesh.ai.
 
-## All scripts mentioned in this readme need to be copied from the readme rendered in a markdown renderer. Not copied directly from this README file.
+## Homepage
+https://github.com/MajorZiploc/remesh_prompt
+
+## All scripts mentioned in this readme need to be copied from the readme rendered in a markdown renderer. Not copied directly from this README file. You can copy straight from the github home page of this project
 
 ## Requirements
 - Assumes global python is v3 for creation of the virtual environment
