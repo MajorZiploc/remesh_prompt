@@ -26,6 +26,15 @@ class ConversationIndexViewTests(TestCase):
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation, conversation2])
 
+  def test_search_filters_to_things_that_contain_pan(self):
+    conversation = create_conversation(title='Pancakes')
+    conversation2 = create_conversation(title='Tacos')
+    conversation3 = create_conversation(title='How many pans does it take to create 20 pancakes?')
+    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': 'pan'})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation3, conversation])
+
 
 class ConversationAddFormTests(TestCase):
   def test_add_conversation_form_exists(self):
