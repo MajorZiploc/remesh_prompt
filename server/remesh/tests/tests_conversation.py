@@ -38,6 +38,19 @@ class ConversationIndexViewTests(TestCase):
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation3, conversation])
 
+  def test_search_phase_with_special_chars(self):
+    conversation = create_conversation(title='-{!z~}Pancakes')
+    conversation2 = create_conversation(title='Tacos')
+    conversation3 = create_conversation(title='How many pans does it take to create 20 pancakes?')
+    conversation4 = create_conversation(title='Taco Community')
+    conversation5 = create_conversation(title='Word up to the Taco Community players')
+    search_phrase = '-{!z~}'
+    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Conversations that contain {search_phrase}")
+    self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation])
+
   def test_search_filters_to_things_that_contain_words_with_space(self):
     conversation = create_conversation(title='Pancakes')
     conversation2 = create_conversation(title='Tacos')

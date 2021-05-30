@@ -39,6 +39,22 @@ class MessageIndexViewTests(TestCase):
     self.assertContains(response, "No thank you to the tacos")
     self.assertQuerysetEqual(response.context['message_list'], [message, message2])
 
+  def test_search_phase_with_special_chars(self):
+    conversation = create_conversation(title='Tacos')
+    message = create_message(text='No thank -{!z~}you 4 the taco Community', conversation=conversation)
+    message2 = create_message(text='I love tacos so much!', conversation=conversation)
+    message3 = create_message(text='Ok but srsly? taco LOVE', conversation=conversation)
+    search_phrase = '-{!z~}'
+    response = self.client.get(
+        reverse(
+            'remesh:message_index', args=(
+                conversation.pk,)), {
+            'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Messages that contain {search_phrase}")
+    self.assertContains(response, "Add New Message")
+    self.assertQuerysetEqual(response.context['message_list'], [message])
+
   def test_search_filters_to_things_that_contain_words_with_space(self):
     conversation = create_conversation(title='Tacos')
     message = create_message(text='No thank you 4 the taco Community', conversation=conversation)
