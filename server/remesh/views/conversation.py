@@ -11,27 +11,15 @@ class ConversationIndexView(generic.ListView):
   context_object_name = 'conversation_list'
 
   def get_queryset(self, *args, **kwargs):
+    search_phrase = self.request.GET.get('search_phrase', None)
+    if (search_phrase):
+      return Conversation.objects.filter(title__icontains=search_phrase)
     return Conversation.objects.all()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context['title'] = 'All Conversations'
+    context['title'] = 'Conversations'
     return context
-
-
-class ConversationSearchView(generic.ListView):
-  template_name = 'remesh/conversation_index.html'
-  context_object_name = 'conversation_list'
-
-  def get_queryset(self, *args, **kwargs):
-    search_phrase = self.request.GET.get('search_phrase')
-    return Conversation.objects.filter(title__icontains=search_phrase)
-
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['title'] = 'Filtered Conversations'
-    return context
-
 
 
 class ConversationAddView(generic.FormView):
