@@ -20,3 +20,14 @@ def create_message(conversation,
       date_time_sent=date_time_sent,
       conversation=conversation
   )
+
+def create_thought(message,
+                        text='I agree with telling friends hi',
+                        date_time_sent=timezone.now()
+                        ):
+  return Thought.objects.create(
+      text=text,
+      date_time_sent=date_time_sent,
+      message=message
+  )
+

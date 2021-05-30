@@ -12,7 +12,7 @@ class ConversationForm(forms.ModelForm):
 class ThoughtForm(forms.ModelForm):
   class Meta:
     model = Thought
-    fields = "__all__"
+    exclude = ['message']
 
 
 class MessageForm(forms.ModelForm):
