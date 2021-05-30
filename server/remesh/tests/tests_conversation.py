@@ -38,6 +38,31 @@ class ConversationIndexViewTests(TestCase):
     self.assertContains(response, "Add New Conversation")
     self.assertQuerysetEqual(response.context['conversation_list'], [conversation3, conversation])
 
+  def test_search_filters_to_things_that_contain_words_with_space(self):
+    conversation = create_conversation(title='Pancakes')
+    conversation2 = create_conversation(title='Tacos')
+    conversation3 = create_conversation(title='How many pans does it take to create 20 pancakes?')
+    conversation4 = create_conversation(title='Taco Community')
+    conversation5 = create_conversation(title='Word up to the Taco Community players')
+    search_phrase = 'taco community'
+    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Conversations that contain {search_phrase}")
+    self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation4, conversation5])
+
+  def test_search_filters_to_things_that_contain_the_number_4(self):
+    conversation = create_conversation(title='Pancakes')
+    conversation2 = create_conversation(title='Tacos')
+    conversation3 = create_conversation(title='How many pans does it take to create 20 pancakes?')
+    conversation4 = create_conversation(title='Tacos4all')
+    search_phrase = '4'
+    response = self.client.get(reverse('remesh:conversation_index'), {'search_phrase': search_phrase})
+    self.assertEqual(response.status_code, 200)
+    self.assertContains(response, f"Conversations that contain {search_phrase}")
+    self.assertContains(response, "Add New Conversation")
+    self.assertQuerysetEqual(response.context['conversation_list'], [conversation4])
+
   def test_empty_search_phrase_shows_all_conversations(self):
     conversation = create_conversation(title='Pancakes')
     conversation2 = create_conversation(title='Tacos')
