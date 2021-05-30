@@ -16,6 +16,7 @@ class MessageIndexView(generic.ListView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context['title'] = 'Messages'
+    context['conversation_pk'] = self.kwargs['conversation_pk']
     return context
 
 
@@ -29,12 +30,14 @@ class MessageAddView(generic.FormView):
     return context
 
   def get_success_url(self):
-    return reverse('remesh:message_index')
+    return reverse('remesh:message_index', args=(self.kwargs['conversation_pk'],))
 
   def get_initial(self):
     initial = super().get_initial()
     return initial
 
   def form_valid(self, form):
+    message = Message(conversation=Conversation.objects.get(pk=self.kwargs['conversation_pk']))
+    form = MessageForm(self.request.POST, instance=message)
     form.save()
     return super().form_valid(form)

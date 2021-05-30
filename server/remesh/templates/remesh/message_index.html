@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if message_list %}
+<p>{{ title }}</p>
+<ul>
+  {% for message in message_list %}
+  <li>
+    <a>{{ message.title }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No messages are available.</p>
+{% endif %}
+<a id="add-message" href="{% url 'remesh:message_add' conversation_pk%}">Add New Message</a>
+{% endblock %}
+
