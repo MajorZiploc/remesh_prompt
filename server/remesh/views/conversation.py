@@ -19,11 +19,6 @@ class ConversationIndexView(generic.ListView):
     return context
 
 
-class ConversationDetailView(generic.DetailView):
-  model = Conversation
-  template_name = 'remesh/conversation_detail.html'
-
-
 class ConversationAddView(generic.FormView):
   form_class = ConversationForm
   template_name = 'remesh/conversation_add.html'
@@ -34,26 +29,6 @@ class ConversationAddView(generic.FormView):
   def get_initial(self):
     initial = super().get_initial()
     return initial
-
-  def form_valid(self, form):
-    form.save()
-    return super().form_valid(form)
-
-
-class ConversationEditView(generic.UpdateView):
-  form_class = ConversationForm
-  template_name = 'remesh/conversation_edit.html'
-
-  def get_success_url(self):
-    return reverse('remesh:conversation_index')
-
-  def get_initial(self):
-    initial = super().get_initial()
-    return initial
-
-  def get_object(self, *args, **kwargs):
-    conversation = get_object_or_404(Conversation, pk=self.kwargs['pk'])
-    return conversation
 
   def form_valid(self, form):
     form.save()
